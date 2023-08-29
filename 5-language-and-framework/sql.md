@@ -2,6 +2,7 @@
 + [Types of SQL Joins](https://www.baeldung.com/sql-joins)
 + [SQL Server Self Join](https://www.sqlservertutorial.net/sql-server-basics/sql-server-self-join)
 + [MySQL Performance Tuning and Optimization Tips](https://phoenixnap.com/kb/improve-mysql-performance-tuning-optimization)
++ [N+1 Query](https://viblo.asia/p/n-1-query-tinh-nang-hay-la-bug-maGK7WnMKj2)
 
 # Question
 + [Different ways to SQL delete duplicate rows from a SQL Table](https://www.sqlshack.com/different-ways-to-sql-delete-duplicate-rows-from-a-sql-table/)
@@ -9,7 +10,7 @@
 + [Top 30 SQL Query Interview Questions You Must Practice In 2023](https://www.edureka.co/blog/interview-questions/sql-query-interview-questions)
 + [Top 30 SQL Query Interview Questions](https://www.shiksha.com/online-courses/articles/top-sql-query-interview-questions/)
 + [Top 40 SQL Query Interview Questions and Answers for Practice](https://artoftesting.com/sql-queries-for-interview)
-+ [https://artoftesting.com/sql-queries-for-interview](https://www.edureka.co/blog/interview-questions/sql-interview-questions)
++ [Top 115 SQL Interview Questions You Must Prepare In 2023](https://www.edureka.co/blog/interview-questions/sql-interview-questions)
 + [50 SQL Interview Questions and Answers for 2023](https://www.guru99.com/sql-interview-questions-answers.html)
 + [SQL Interview Questions](https://www.interviewbit.com/sql-interview-questions/)
 + [180+ SQL Interview Questions and Answers in 2023](https://www.mygreatlearning.com/blog/sql-interview-questions/)

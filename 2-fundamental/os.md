@@ -1,10 +1,10 @@
-# Book
-+ [Modern Operating Systems 4th Edition](./pdf/Modern-Operating-Systems-4th-Edition.pdf)
-+ [The Linux Command Line](./pdf/The-Linux-Command-Line-2nd.pdf)
-
 # Guide
 + [OS](https://www.baeldung.com/cs/category/core-concepts/os-core-concepts)
 + [Linux](https://www.baeldung.com/linux/)
+
+# Book
++ [Modern Operating Systems 4th Edition](./pdf/Modern-Operating-Systems-4th-Edition.pdf)
++ [The Linux Command Line](./pdf/The-Linux-Command-Line-2nd.pdf)
 
 # Highlight
 + [Process vs. Thread](https://www.baeldung.com/cs/process-vs-thread)

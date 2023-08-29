@@ -1,4 +1,4 @@
-# Highlight
+# Question
 + How's your team organized?
 + Who's your stakeholders, how do you work with them?
 + Tell me about the most difficult team you’ve ever worked with. Why were they difficult and how did you cope?

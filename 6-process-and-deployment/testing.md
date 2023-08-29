@@ -9,4 +9,4 @@
 + What's your Unit test coverage?
 + How do you test RESTFul web service, sql query?
 + Familiar with load testing, performance testing, stress testing, security testing?
-+ Familiar with test tool(Postman, BloomRPC, JMeter)
++ Familiar with test tool (Postman, BloomRPC, JMeter)

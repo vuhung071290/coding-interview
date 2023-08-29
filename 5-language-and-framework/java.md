@@ -6,7 +6,7 @@
 + [Java concurrency in practice](./pdf/Java-concurrency-in-practice.pdf)
 + [Java Performance The Definitive Guide](./pdf/Java-Performance-The-Definitive-Guide.pdf)
 + [Java 8 in Action.pdf](./pdf/Java-8-in-Action.pdf)
-+ [More Book](https://www.interviewbit.com/blog/java-books/)
++ [More Java Books](https://www.interviewbit.com/blog/java-books/)
 
 ## For interview
 + [Java interview notes](./pdf/Java-interview-notes-covers-136-topics-and-700-technical-interview-questions.pdf)

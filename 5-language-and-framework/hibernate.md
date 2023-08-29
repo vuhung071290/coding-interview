@@ -9,5 +9,3 @@
 + [Hibernate / JPA Many to Many Mappings](https://howtodoinjava.com/hibernate/hibernate-many-to-many-mapping/)
 + [Disadvantages of Hibernate](http://javainsimpleway.com/disadvantages-of-hibernate/)
 + [Hibernate Best Practices](https://thorben-janssen.com/hibernate-best-practices/)
-
-# Question
