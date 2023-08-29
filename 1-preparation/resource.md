@@ -1,4 +1,4 @@
-# Guide
+# General
 + [Tech Interview Handbook](https://github.com/yangshun/tech-interview-handbook)
 + [Coding Interview University](https://github.com/jwasham/coding-interview-university)
 
