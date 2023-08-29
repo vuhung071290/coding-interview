@@ -7,8 +7,10 @@
 + [System Design Interview An Insider’s Guide by Alex Xu](./pdf/System-Design-Interview.pdf)
 + [Understanding distributed systems](./pdf/Understanding-distributed-systems.pdf)
 + [Designing data intensive applications](./pdf/Designing-Data-Intensive-Applications.pdf)
-+ [Building Microservices](./pdf/Building-Microservices.pdf)
 + [Designing Event-Driven Systems](./pdf/Designing-Event-Driven-Systems.pdf)
++ [Microservices Patterns](./pdf/Microservices-Patterns.pdf)
++ [Microservices In Action](./pdf/Microservices-In-Action.pdf)
++ [Building Microservices](./pdf/Building-Microservices.pdf)
 
 # Blog
 + [ByteByteGo Newsletter](https://blog.bytebytego.com/)
@@ -38,14 +40,15 @@
 + [SQL vs NoSQL](https://viblo.asia/p/cau-chuyen-muon-thuo-cua-sql-va-nosql-Do754OXelM6)
 
 ## Caching
-+ [Top caching strategies](https://blog.bytebytego.com/p/top-caching-strategies)
 + [Redis architecture explained](https://architecturenotes.co/redis/)
++ [Top caching strategies](https://blog.bytebytego.com/p/top-caching-strategies)
 
 ## Queue
 + [Apache Kafka zero to one](https://viblo.asia/s/apache-kafka-tu-zero-den-one-aGK7jPbA5j2)
 
 ## Microservice
-+ [10 Essential Microservice Design Patterns and Principles](https://javarevisited.blogspot.com/2021/09/microservices-design-patterns-principles.html#axzz8BhoxFCvc)
++ [A pattern language for microservices](https://microservices.io/patterns/)
 + [Microservice series](https://viblo.asia/s/microservice-tu-ly-thuyet-den-thuc-tien-P0lPmr9p5ox)
++ [CQRS and Event Sourcing](https://viblo.asia/p/microservices-cung-voi-cqrs-va-event-sourcing-1Je5EDnYlnL)
 + [Transactional Outbox and Inbox](https://softwaremill.com/microservices-101/)
 
