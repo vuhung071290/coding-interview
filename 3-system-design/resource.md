@@ -1,16 +1,23 @@
+# Architecture
++ `Book`[Patterns of Enterprise Application Architecture](./pdf/Patterns-of-Enterprise-Application-Architecture.pdf)
++ `Book`[Designing Data-Intensive applications](./pdf/Designing-Data-Intensive-Applications.pdf)
++ `Book`[System Design Interview Volume 1](./pdf/System-Design-Interview.pdf)
++ `Book`[Clean Architecture](./pdf/Clean-Architecture.pdf)
++ `Book`[Building Microservices: Designing Fine-Grained Systems](./pdf/Building-Microservices.pdf)
++ `Book`[Domain-Driven-Design: Tackling Complexity in the Heart of Software](./pdf/Domain-Driven-Design.pdf)
++ `Link`[Series of posts about Software Architecture](https://herbertograca.com/2017/07/03/the-software-architecture-chronicles/#more-10113)
+
 ## Guide
 + [The complete guide to System Design in 2023](https://www.educative.io/blog/complete-guide-to-system-design)
 + [System design primer](https://github.com/donnemartin/system-design-primer)
 + [Architecture notes](https://architecturenotes.co/)
 
 # Book
-+ [System Design Interview An Insider’s Guide by Alex Xu](./pdf/System-Design-Interview.pdf)
 + [Understanding distributed systems](./pdf/Understanding-distributed-systems.pdf)
-+ [Designing data intensive applications](./pdf/Designing-Data-Intensive-Applications.pdf)
 + [Designing Event-Driven Systems](./pdf/Designing-Event-Driven-Systems.pdf)
 + [Microservices Patterns](./pdf/Microservices-Patterns.pdf)
 + [Microservices In Action](./pdf/Microservices-In-Action.pdf)
-+ [Building Microservices](./pdf/Building-Microservices.pdf)
++ [Microservices building scalable software](./pdf/Microservices-building-scalable-software.pdf)
 
 # Blog
 + [ByteByteGo Newsletter](https://blog.bytebytego.com/)
