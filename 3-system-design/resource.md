@@ -1,23 +1,27 @@
-# Architecture
-+ `Book`[Patterns of Enterprise Application Architecture](./pdf/Patterns-of-Enterprise-Application-Architecture.pdf)
-+ `Book`[Designing Data-Intensive applications](./pdf/Designing-Data-Intensive-Applications.pdf)
-+ `Book`[System Design Interview Volume 1](./pdf/System-Design-Interview.pdf)
-+ `Book`[Clean Architecture](./pdf/Clean-Architecture.pdf)
-+ `Book`[Building Microservices: Designing Fine-Grained Systems](./pdf/Building-Microservices.pdf)
-+ `Book`[Domain-Driven-Design: Tackling Complexity in the Heart of Software](./pdf/Domain-Driven-Design.pdf)
-+ `Link`[Series of posts about Software Architecture](https://herbertograca.com/2017/07/03/the-software-architecture-chronicles/#more-10113)
-
-## Guide
-+ [The complete guide to System Design in 2023](https://www.educative.io/blog/complete-guide-to-system-design)
-+ [System design primer](https://github.com/donnemartin/system-design-primer)
-+ [Architecture notes](https://architecturenotes.co/)
-
 # Book
++ [Patterns of Enterprise Application Architecture](./pdf/Patterns-of-Enterprise-Application-Architecture.pdf)
++ [Designing Data-Intensive applications](./pdf/Designing-Data-Intensive-Applications.pdf)
++ [System Design Interview Volume 1](./pdf/System-Design-Interview.pdf)
++ [Clean Architecture](./pdf/Clean-Architecture.pdf)
++ [Building Microservices: Designing Fine-Grained Systems](./pdf/Building-Microservices.pdf)
++ [Domain-Driven-Design: Tackling Complexity in the Heart of Software](./pdf/Domain-Driven-Design.pdf)
 + [Understanding distributed systems](./pdf/Understanding-distributed-systems.pdf)
 + [Designing Event-Driven Systems](./pdf/Designing-Event-Driven-Systems.pdf)
 + [Microservices Patterns](./pdf/Microservices-Patterns.pdf)
 + [Microservices In Action](./pdf/Microservices-In-Action.pdf)
-+ [Microservices building scalable software](./pdf/Microservices-building-scalable-software.pdf)
+
+# Guide
++ [The complete guide to System Design in 2023](https://www.educative.io/blog/complete-guide-to-system-design)
++ [System design primer](https://github.com/donnemartin/system-design-primer)
++ [Architecture notes](https://architecturenotes.co/)
++ [Series of posts about Software Architecture](https://herbertograca.com/2017/07/03/the-software-architecture-chronicles/#more-10113)
++ [System design interview guide for Software Engineers](https://www.techinterviewhandbook.org/system-design/)
++ [Awesome system design](https://github.com/madd86/awesome-system-design)
++ [Software Architecture Books](https://github.com/mhadidg/software-architecture-books)
++ [A pattern language for microservices](https://microservices.io/patterns/)
++ [Microservice series](https://viblo.asia/s/microservice-tu-ly-thuyet-den-thuc-tien-P0lPmr9p5ox)
++ [CQRS and Event Sourcing](https://viblo.asia/p/microservices-cung-voi-cqrs-va-event-sourcing-1Je5EDnYlnL)
++ [Transactional Outbox and Inbox](https://softwaremill.com/microservices-101/)
 
 # Blog
 + [ByteByteGo Newsletter](https://blog.bytebytego.com/)
@@ -28,12 +32,6 @@
 # Video
 + [ByteByteGo](https://www.youtube.com/c/ByteByteGo)
 + [Hussein Nasser](https://www.youtube.com/@hnasr)
-
-# Explore more
-+ [System design interview guide for Software Engineers](https://www.techinterviewhandbook.org/system-design/)
-+ [Awesome system design](https://github.com/madd86/awesome-system-design)
-+ [Software Architecture Books](https://github.com/mhadidg/software-architecture-books)
-
 
 # Highlight
 ## Database
@@ -52,10 +50,4 @@
 
 ## Queue
 + [Apache Kafka zero to one](https://viblo.asia/s/apache-kafka-tu-zero-den-one-aGK7jPbA5j2)
-
-## Microservice
-+ [A pattern language for microservices](https://microservices.io/patterns/)
-+ [Microservice series](https://viblo.asia/s/microservice-tu-ly-thuyet-den-thuc-tien-P0lPmr9p5ox)
-+ [CQRS and Event Sourcing](https://viblo.asia/p/microservices-cung-voi-cqrs-va-event-sourcing-1Je5EDnYlnL)
-+ [Transactional Outbox and Inbox](https://softwaremill.com/microservices-101/)
 

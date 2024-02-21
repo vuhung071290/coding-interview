@@ -1,4 +1,3 @@
-# Check List
 + [Java](./java.md)
 + [Spring](./spring.md)
 + [Hibernate](./hibernate.md)

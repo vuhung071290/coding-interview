@@ -2,13 +2,15 @@
 + `Book`[Operating Systems Three Easy Pieces](./pdf/Operating-Systems-Three-Easy-Pieces.pdf)
 + `Book`[Modern Operating Systems](./pdf/Modern-Operating-Systems-4th-Edition.pdf) 
 + `Book`[Operating System Concepts](./pdf/Operating-System-Concepts-10th-2018.pdf) 
-+ `Book`[The Linux Command Line](./pdf/The-Linux-Command-Line-2nd.pdf)
++ `Web`[Operating System](https://www.baeldung.com/cs/category/core-concepts/os-core-concepts)
+# Linux
 + `Book`[Linux for Beginners](./pdf/Linux-for-Beginners.pdf)
++ `Book`[Linux Bible](./pdf/Linux Bible-9th-Edition.pdf)
++ `Book`[The Linux Command Line](./pdf/The-Linux-Command-Line-2nd.pdf)
 + `Book`[How Linux Works](./pdf/How-Linux-Works.pdf)
 + `Book`[Linux Pocket Guide](./pdf/Linux-Pocket-Guide-3rd-Edition.pdf)
-+ `Web`[Operating System](https://www.baeldung.com/cs/category/core-concepts/os-core-concepts)
 + `Web`[Linux](https://www.baeldung.com/linux/)
-### Checklist
+### Highlight
 + [Process vs. Thread](https://www.baeldung.com/cs/process-vs-thread)
 + [Race Condition](https://www.baeldung.com/cs/race-conditions)
 + [What is a Mutex?](https://www.baeldung.com/cs/what-is-mutex)
@@ -16,7 +18,7 @@
 
 # Networking
 + `Web`[Networking](https://www.baeldung.com/cs/category/networking)
-### Checklist
+### Highlight
 + [OSI Model](https://www.baeldung.com/cs/osi-model)
 + [UDP vs TCP](https://www.baeldung.com/cs/udp-vs-tcp)
 + [HTTP: 1.0 vs. 1.1 vs 2.0 vs. 3.0](https://www.baeldung.com/cs/http-versions)
@@ -29,7 +31,7 @@
 
 # Security
 + `Web`[Security](https://www.baeldung.com/cs/category/security)
-### Checklist
+### Highlight
 + [Introduction to Cryptography](https://www.baeldung.com/cs/introduction-to-cryptography)
 + [Symmetric Cryptography vs Asymmetric Cryptography](https://www.baeldung.com/cs/symmetric-vs-asymmetric-cryptography)
 + [Public/Private Keys Vs. Certificates](https://www.baeldung.com/cs/public-private-keys-vs-certificates)

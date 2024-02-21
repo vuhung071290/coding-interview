@@ -1,6 +1,3 @@
-# Guide
-+ [Complete Data structures and Algorithms Guide](./pdf/Complete-Data-structures-and-Algorithms-Guide.pdf)
-
 # Book
 + [Grokking Algorithms](./pdf/Grokking-Algorithms.pdf)
 + [Data Structures and Algorithms Made Easy in Java](./pdf/Data-Structures-and-Algorithms-Made-Easy-in-Java.pdf)
@@ -13,7 +10,8 @@
 + [Introduction to Algorithms: A Creative Approach](./pdf/Introduction-to-Algorithms-A-Creative-Approach.pdf)
 + [Algorithm Design](./pdf/Algorithm-Design.pdf)
 
-# Explore more
+# Guide
++ [Complete Data structures and Algorithms Guide](./pdf/Complete-Data-structures-and-Algorithms-Guide.pdf)
 + [Algorithms you should know before you take system design interviews](https://blog.bytebytego.com/p/algorithms-you-should-know-before)
 + [46 Best Resources to Learn Data Structures and Algorithms - 2023](https://www.mltut.com/best-resources-to-learn-data-structures-and-algorithms/)
 + [Free resources to master algorithms & data structure](https://dev.to/ayabouchiha/free-resources-to-master-algorithms-data-structure-2nfj)
