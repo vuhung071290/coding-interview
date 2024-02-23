@@ -10,7 +10,7 @@
 + [Introduction to Algorithms: A Creative Approach](./pdf/Introduction-to-Algorithms-A-Creative-Approach.pdf)
 + [Algorithm Design](./pdf/Algorithm-Design.pdf)
 
-# Guide
+# Web
 + [Complete Data structures and Algorithms Guide](./pdf/Complete-Data-structures-and-Algorithms-Guide.pdf)
 + [Algorithms you should know before you take system design interviews](https://blog.bytebytego.com/p/algorithms-you-should-know-before)
 + [46 Best Resources to Learn Data Structures and Algorithms - 2023](https://www.mltut.com/best-resources-to-learn-data-structures-and-algorithms/)
@@ -26,6 +26,6 @@
 + [Top Coding Interview Problems](https://takeuforward.org/interviews/strivers-sde-sheet-top-coding-interview-problems/)
 + [450 DSA Cracker](https://450dsa.com/)
 
-# Question
+# Highlight
 + [Hash Table](https://vnoi.info/wiki/algo/data-structures/hash-table.md)
 + [B-trees vs B+trees](https://www.baeldung.com/cs/b-trees-vs-btrees)

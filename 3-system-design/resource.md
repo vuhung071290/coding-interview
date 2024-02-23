@@ -10,9 +10,10 @@
 + [Microservices Patterns](./pdf/Microservices-Patterns.pdf)
 + [Microservices In Action](./pdf/Microservices-In-Action.pdf)
 
-# Guide
+# Web
 + [The complete guide to System Design in 2023](https://www.educative.io/blog/complete-guide-to-system-design)
 + [System design primer](https://github.com/donnemartin/system-design-primer)
++ [System Design 101](https://github.com/ByteByteGoHq/system-design-101)
 + [Architecture notes](https://architecturenotes.co/)
 + [Series of posts about Software Architecture](https://herbertograca.com/2017/07/03/the-software-architecture-chronicles/#more-10113)
 + [System design interview guide for Software Engineers](https://www.techinterviewhandbook.org/system-design/)
@@ -34,7 +35,7 @@
 + [Hussein Nasser](https://www.youtube.com/@hnasr)
 
 # Highlight
-## Database
+### Database
 + [Database Isolation Level](https://huypva.github.io/database-isolation-level/)
 + [Optimistic lock và Pessimistic lock](https://viblo.asia/p/009-optimistic-lock-va-pessimistic-lock-L4x5xr7aZBM)
 + [An in-depth look at Database Indexing](https://www.freecodecamp.org/news/database-indexing-at-a-glance-bb50809d48bd/)
@@ -44,10 +45,10 @@
 + [ACID vs BASE](https://www.linkedin.com/advice/0/what-differences-similarities-between-acid-base-properties)
 + [SQL vs NoSQL](https://viblo.asia/p/cau-chuyen-muon-thuo-cua-sql-va-nosql-Do754OXelM6)
 
-## Caching
+### Caching
 + [Redis architecture explained](https://architecturenotes.co/redis/)
 + [Top caching strategies](https://blog.bytebytego.com/p/top-caching-strategies)
 
-## Queue
+### Queue
 + [Apache Kafka zero to one](https://viblo.asia/s/apache-kafka-tu-zero-den-one-aGK7jPbA5j2)
 
