@@ -18,6 +18,7 @@
 + [Series of posts about Software Architecture](https://herbertograca.com/2017/07/03/the-software-architecture-chronicles/#more-10113)
 + [System design interview guide for Software Engineers](https://www.techinterviewhandbook.org/system-design/)
 + [Awesome system design](https://github.com/madd86/awesome-system-design)
++ [System design newsletter](https://github.com/systemdesign42/system-design)
 + [Software Architecture Books](https://github.com/mhadidg/software-architecture-books)
 + [A pattern language for microservices](https://microservices.io/patterns/)
 + [Microservice series](https://viblo.asia/s/microservice-tu-ly-thuyet-den-thuc-tien-P0lPmr9p5ox)
