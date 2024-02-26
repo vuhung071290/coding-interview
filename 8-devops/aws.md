@@ -8,9 +8,9 @@
 
 # Book
 ### SSA-C03
-+ [AWS-Certified-Solutions-Architect-Study Guide-SAA-C03](pdf/AWS-Certified-Solutions-Architect-Study Guide-SAA-C03.pdf)
++ [AWS-Certified-Solutions-Architect-Study Guide-SAA-C03](pdf/AWS-Certified-Solutions-Architect-Study-Guide-SAA-C03.pdf)
 + [AWS Certified Solutions Architect Official Study Guide: Associate Exam](pdf/AWS-Certified-Solutions-Architect-Official-Study-Guide.pdf)
-+ [AWS-Certified-Solutions-Architect-Associate-SAA-C03.pdf](pdf/AWS-Certified-Solutions-Architect-Associate-SAA-C03.pdf)
++ [AWS-Certified-Solutions-Architect-Associate-SAA-C03](pdf/AWS-Certified-Solutions-Architect-Associate-SAA-C03.pdf)
 
 ### SSA-C02
 + [AWS-Certified-Solutions-Architect-Associate-Cert-Guide](pdf/AWS-Certified-Solutions-Architect-Associate-Cert-Guide.pdf)
