@@ -1,8 +1,3 @@
-# Cloud Guru
-+ https://www.pluralsight.com/cloud-guru
-  + Username: online-purchase@tyme.com
-  + Password: Plschange1
-
 # Web 
 + [SAA-C03 Experience](https://vntechies.dev/blog/aws-certs/kinh-nghiem-thi-chung-chi-aws-certified-solutions-architect-associate-saa-c03)
 
