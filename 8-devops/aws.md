@@ -3,6 +3,7 @@
 + [Link 1](https://vntechies.dev/blog/aws-certs/kinh-nghiem-thi-chung-chi-aws-certified-solutions-architect-associate-saa-c03)
 + [Link 2](https://vntechies.dev/blog/aws-certs/kinh-nghiem-thi-chung-chi-aws-certified-solutions-architect-associate#-aws-certified-solutions-architect---associate-2019-by-ryan-kroonenburg-tr%C3%AAn-udemy)
 + [Link 3](https://viblo.asia/p/chang-duong-do-aws-saa-cua-minh-E375zVv65GW)
++ [SAA-C03-Cheatsheet](pdf/AWS-Solution-Architect-Associate-SAA-C03-Cheatsheet.pdf)
 
 # Book
 ### SAA-C03
