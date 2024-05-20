@@ -9,9 +9,11 @@
 + [Complete Data structures and Algorithms Guide](./pdf/Complete-Data-structures-and-Algorithms-Guide.pdf)
 
 # Web
++ [Data Structures & Algorithms Roadmap](https://roadmap.sh/datastructures-and-algorithms)
 + [46 Best Resources to Learn Data Structures and Algorithms - 2023](https://www.mltut.com/best-resources-to-learn-data-structures-and-algorithms/)
 + [Free resources to master algorithms & data structure](https://dev.to/ayabouchiha/free-resources-to-master-algorithms-data-structure-2nfj)
 + [Awesome Algorithms](https://github.com/tayllan/awesome-algorithms)
++ [Zero to mastery Algorithms](https://zero-to-mastery.github.io/resources/AlgorithmsDataStructures.html)
 
 # Practice
 + [Best practice questions](https://www.techinterviewhandbook.org/best-practice-questions/)
