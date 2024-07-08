@@ -22,5 +22,3 @@
 
 # Highlight
 + [Algorithms you should know before you take system design interviews](https://blog.bytebytego.com/p/algorithms-you-should-know-before)
-+ [Hash Table](https://vnoi.info/wiki/algo/data-structures/hash-table.md)
-+ [B-trees vs B+trees](https://www.baeldung.com/cs/b-trees-vs-btrees)

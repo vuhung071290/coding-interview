@@ -5,7 +5,7 @@
 + [Why You Should Use Constructor Injection in Spring](https://reflectoring.io/constructor-injection/)
 + [Spring Bean Life Cycle](https://howtodoinjava.com/spring-core/spring-bean-life-cycle/)
 + [Spring Bean Scopes](https://howtodoinjava.com/spring-core/spring-bean-scopes/)
-+ [Spring Bean Autowiring – @Autowired](https://howtodoinjava.com/spring-core/spring-beans-autowiring-concepts/)
++ [Spring @Autowired](https://howtodoinjava.com/spring-core/spring-beans-autowiring-concepts/)
 + [Introduction to Spring Data JPA](https://www.baeldung.com/the-persistence-layer-with-spring-data-jpa)
 + [Demystifying Transactions and Exceptions with Spring](https://reflectoring.io/spring-transactions-and-exceptions/)
 + [How Does Spring @Transactional Really Work?](https://dzone.com/articles/how-does-spring-transactional)
