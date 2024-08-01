@@ -8,5 +8,4 @@
 + [System design](./3-system-design/resource.md): System Design
 + [DSA](4-dsa/resource.md): Data structures and Algorithms
 + [Language and Framework](./5-language-and-framework/resource.md): Java, Spring, Hibernate, Restful, SQL
-+ [Process and Deployment](./6-process-and-deployment/resource.md): CI/CD, Git, Testing, Agile
-+ [Management skill and Culture fit](./7-management-skill-and-culture-fit/resource.md): Management Skill, Culture Fit
++ [Miscellaneous ](6-misc/resource.md): CI/CD, Git, Testing, Agile, etc.
