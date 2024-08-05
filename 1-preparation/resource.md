@@ -1,6 +1,5 @@
 # Book
 + [Cracking The Coding Interview](pdf/Cracking-the-Coding-Interview-6th-Edition.pdf)
-+ [Programming Interviews Exposed: Secrets to Landing Your Next Job](pdf/Programming-Interviews-Exposed.pdf)
 + [Elements of Programming Interviews In Java](pdf/Elements-of-Programming-Interviews-In-Java.pdf)
 
 # Web
