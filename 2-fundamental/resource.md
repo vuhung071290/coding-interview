@@ -17,17 +17,12 @@
 + [The Clean Coder](./pdf/The-Clean-Coder.pdf)
 
 # Web
-### Operating Systems
-+ [Computer Science](https://www.baeldung.com/cs/)
-
-### Linux
-+ [Linux](https://www.baeldung.com/linux/)
+### Refactoring
++ [Refactoring guru](https://refactoring.guru/)
 
 ### Principles
 + [Principles of Software Engineering](https://www.interviewbit.com/blog/principles-of-software-engineering/)
-+ [A Solid Guide to SOLID Principles](https://www.baeldung.com/solid-principles)
 
-# Highlight
 ### Operating Systems
 + [Process vs. Thread](https://www.baeldung.com/cs/process-vs-thread)
 + [Race Condition](https://www.baeldung.com/cs/race-conditions)

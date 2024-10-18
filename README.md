@@ -7,5 +7,4 @@
 + [Fundamental](2-fundamental/resource.md): CS Fundamental, OS, Networking, Security, Clean code
 + [System design](./3-system-design/resource.md): System Design
 + [DSA](4-dsa/resource.md): Data structures and Algorithms
-+ [Language and Framework](./5-language-and-framework/resource.md): Java, Spring, Hibernate, Restful, SQL
-+ [Miscellaneous ](6-misc/resource.md): CI/CD, Git, Testing, Agile, etc.
++ [Miscellaneous ](5-misc/resource.md):  Java, Spring, Hibernate, Restful, SQL, CI/CD, Git, Testing, Agile, etc.

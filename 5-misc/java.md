@@ -1,14 +1,14 @@
 # Book
 ### For Study
-+ [Effective Java](./pdf/Effective-Java-3rd-Edition.pdf)
-+ [Java The Complete Reference](./pdf/Java-The-Complete-Reference-11-Edition.pdf)
-+ [Java concurrency in practice](./pdf/Java-concurrency-in-practice.pdf)
-+ [Java Performance The Definitive Guide](./pdf/Java-Performance-The-Definitive-Guide.pdf)
++ [Effective Java](pdf/Effective-Java-3rd-Edition.pdf)
++ [Java The Complete Reference](pdf/Java-The-Complete-Reference-11-Edition.pdf)
++ [Java concurrency in practice](pdf/Java-concurrency-in-practice.pdf)
++ [Java Performance The Definitive Guide](pdf/Java-Performance-The-Definitive-Guide.pdf)
 
 ### For interview
-+ [Java interview notes](./pdf/Java-interview-notes-covers-136-topics-and-700-technical-interview-questions.pdf)
-+ [Grokking the java interview](./pdf/Grokking-the-java-interview.pdf)
-+ [Grokking the java developer interview](./pdf/Grokking-the-java-developer-interview.pdf)
++ [Java interview notes](pdf/Java-interview-notes-covers-136-topics-and-700-technical-interview-questions.pdf)
++ [Grokking the java interview](pdf/Grokking-the-java-interview.pdf)
++ [Grokking the java developer interview](pdf/Grokking-the-java-developer-interview.pdf)
 
 # Highlight
 ### JVM Architecture

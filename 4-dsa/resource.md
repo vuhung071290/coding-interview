@@ -14,11 +14,9 @@
 + [Free resources to master algorithms & data structure](https://dev.to/ayabouchiha/free-resources-to-master-algorithms-data-structure-2nfj)
 + [Awesome Algorithms](https://github.com/tayllan/awesome-algorithms)
 + [Zero to mastery Algorithms](https://zero-to-mastery.github.io/resources/AlgorithmsDataStructures.html)
++ [Algorithms you should know before you take system design interviews](https://blog.bytebytego.com/p/algorithms-you-should-know-before)
 
 # Practice
 + [Best practice questions](https://www.techinterviewhandbook.org/best-practice-questions/)
 + [Top Coding Interview Problems](https://takeuforward.org/interviews/strivers-sde-sheet-top-coding-interview-problems/)
 + [450 DSA Cracker](https://450dsa.com/)
-
-# Highlight
-+ [Algorithms you should know before you take system design interviews](https://blog.bytebytego.com/p/algorithms-you-should-know-before)

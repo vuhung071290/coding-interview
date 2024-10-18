@@ -24,4 +24,4 @@
 + [HandlerInterceptors vs. Filters in Spring MVC](https://www.baeldung.com/spring-mvc-handlerinterceptor-vs-filter)
 
 ### Question
-+ [Spring Interview Questions](./pdf/Spring-Interview-Questions.pdf)
++ [Spring Interview Questions](pdf/Spring-Interview-Questions.pdf)
