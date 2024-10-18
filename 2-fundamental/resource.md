@@ -1,16 +1,11 @@
 # Book
 ### Operating Systems
 + [Operating Systems Three Easy Pieces](./pdf/Operating-Systems-Three-Easy-Pieces.pdf)
-+ [Operating System Concepts](./pdf/Operating-System-Concepts-10th-2018.pdf)
 + [Modern Operating Systems](./pdf/Modern-Operating-Systems-4th-Edition.pdf)
 
 ### Linux
-+ [The Linux Command Line](./pdf/The-Linux-Command-Line-2nd.pdf)
-+ [Linux Bible](./pdf/Linux Bible-9th-Edition.pdf)
-+ [How Linux Works](./pdf/How-Linux-Works.pdf)
-+ [Linux Pocket Guide](./pdf/Linux-Pocket-Guide-3rd-Edition.pdf)
-+ [Linux Basics for Hackers](./pdf/Linux-Basics-for-Hackers-Getting-Started-with-Networking-Scripting-and-Security-in-Kali.pdf)
-+ [Linux for Beginners](./pdf/Linux-for-Beginners.pdf)
++ [The Linux Command Line: A Complete Introduction](./pdf/The-Linux-Command-Line-2nd.pdf)
++ [How Linux Works: What Every Superuser Should Know](./pdf/How-Linux-Works.pdf)
 
 ### Design Patterns
 + [Design Patterns by Gang of Four](./pdf/Design-Patterns-by-Gang-of-Four.pdf)
@@ -19,9 +14,6 @@
 
 ### Clean code
 + [Clean Code](./pdf/Clean-Code.pdf)
-+ [Code Complete](./pdf/Code-Complete-2nd-Edition.pdf)
-+ [The Pragmatic Programmer](./pdf/The-Pragmatic-Programmer.pdf)
-+ [Refactoring Improving the Design of Existing Code](./pdf/Refactoring-Improving-the-Design-of-Existing-Code.pdf)
 + [The Clean Coder](./pdf/The-Clean-Coder.pdf)
 
 # Web
