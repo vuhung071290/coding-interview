@@ -1,4 +1,4 @@
-# Highlight
+# Web
 + [Eager/Lazy Loading In Hibernate](https://www.baeldung.com/hibernate-lazy-eager-loading)
 + [When Does JPA Set the Primary Key](https://www.baeldung.com/jpa-strategies-when-set-primary-key)
 + [Hibernate Inheritance Mapping](https://techmaster.vn/posts/36499/hibernate-inheritance-mapping)

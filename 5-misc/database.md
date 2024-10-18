@@ -6,9 +6,6 @@
 
 # Web
 + [Redis architecture explained](https://architecturenotes.co/redis/)
-+ [Top caching strategies](https://blog.bytebytego.com/p/top-caching-strategies)
-
-# Highlight
 + [Database Isolation Level](https://huypva.github.io/database-isolation-level/)
 + [Optimistic lock và Pessimistic lock](https://viblo.asia/p/009-optimistic-lock-va-pessimistic-lock-L4x5xr7aZBM)
 + [An in-depth look at Database Indexing](https://www.freecodecamp.org/news/database-indexing-at-a-glance-bb50809d48bd/)
