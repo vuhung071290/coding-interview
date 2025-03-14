@@ -38,19 +38,6 @@
 + [Exception Handling in Java](https://www.baeldung.com/java-exceptions)
 + [9 Best Practices to Handle Exceptions in Java](https://stackify.com/best-practices-exceptions-java/)
 
-### Generic
-+ [Generics in Java](https://www.geeksforgeeks.org/generics-in-java/)
-+ [The Basics of Java Generics](https://www.baeldung.com/java-generics)
-
-### Functional Programming
-+ [Functional Programming in Java](https://www.baeldung.com/java-functional-programming)
-+ [Functional Interfaces in Java 8](https://www.baeldung.com/java-8-functional-interfaces)
-+ [Function Composition and Chaining](https://www.freecodecamp.org/news/functional-programming-in-java/)
-+ [Functional Programming And Programming Paradigms in Java](https://dev.to/ggorantala/functional-programming-and-programming-paradigms-in-java-323f)
-+ [How Does Streams API Work? A Deep Dive on Stream Operation Flow](https://dev.to/ggorantala/how-does-streams-api-work-a-deep-dive-on-streamoperation-flow-4e07)
-+ [A Guide to Java Streams in Java 8: In-Depth Tutorial With Examples](https://stackify.com/streams-guide-java-8/)
-+ [Understanding, Accepting and Leveraging Optional in Java](https://stackify.com/optional-java/)
-
 ### Miscellaneous
 + [Immutable Classes in Java](https://howtodoinjava.com/java/basics/how-to-make-a-java-class-immutable/)
 + [Autoboxing and Unboxing](https://www.geeksforgeeks.org/autoboxing-unboxing-java/)
@@ -67,4 +54,4 @@
 + [Using an Interface vs. Abstract Class in Java](https://www.baeldung.com/java-interface-vs-abstract-class)
 + [equals() and hashCode()](https://shareprogramming.net/moi-quan-he-giua-equals-va-hashcode-trong-java/)
 + ['super' and 'this' keywords](https://www.geeksforgeeks.org/super-and-this-keywords-in-java/)
-+ [Java Features from Java 8 to Java 17](https://reflectoring.io/java-release-notes/)
++ [Tất tần tật từ JDK 8 đến JDK 21](https://viblo.asia/p/tat-tan-tat-tu-jdk-8-den-jdk-21-MG24B63B4z3)
