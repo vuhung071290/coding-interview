@@ -1,1 +1,3 @@
-How to prepare for for coding interview
+# Coding interview
+
+> This repo will be useful to any software engineer
