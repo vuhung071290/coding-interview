@@ -1,4 +1,16 @@
-# Redis
+# Redis for Backend Engineers
+
+> In-memory data structure store for high-performance caching, sessions, and real-time applications
+
+## 🎯 Why Redis Matters for Backend Engineers
+- **Performance optimization:** Sub-millisecond response times, 100K+ ops/sec
+- **System design interviews:** Essential for caching layers, session stores, rate limiters
+- **Scalability patterns:** Distributed caching, session clustering, pub/sub messaging
+- **Production reliability:** Battle-tested in high-traffic systems (Twitter, GitHub, Instagram)
+- **Versatile data structures:** Strings, hashes, lists, sets, sorted sets, streams, bitmaps
+- **Real-time features:** Pub/sub, streams, distributed locks, leaderboards
+
+**Focus:** Production Redis patterns for scalable backend systems and system design interviews.
 
 ---
 
@@ -234,4 +246,63 @@ Production: **allkeys-lru** hoặc **allkeys-lfu**.
 - Replication → read scaling.
 - Sentinel → HA.
 - Cluster → sharding & large scale.
+
+---
+
+# 📚 Essential Resources & System Design Applications
+
+## Interview Quick Reference
+**Core concepts (must know):**
+- Data structures and their use cases
+- Memory management and eviction policies
+- Persistence options (RDB vs AOF)
+- High availability patterns (Sentinel, Cluster)
+- Performance characteristics and limitations
+
+**System design applications:**
+- **Caching layer:** Database query caching, application-level cache
+- **Session storage:** Distributed session management for stateless apps
+- **Rate limiting:** Token bucket, sliding window implementations
+- **Real-time features:** Leaderboards, counters, real-time analytics
+- **Distributed locks:** Coordination in distributed systems
+
+**Common interview questions:**
+- "Design a distributed cache system"
+- "How would you implement a rate limiter using Redis?"
+- "Explain Redis clustering and how it handles failover"
+- "Design a real-time leaderboard system"
+- "How do you prevent cache stampede?"
+
+## Performance Benchmarks
+**Typical performance:**
+- Single instance: 100K+ operations/second
+- Memory access: <1ms response times
+- Network latency: Primary bottleneck in production
+- Cluster throughput: Scales linearly with nodes
+
+## Production Patterns
+**Caching strategies:**
+- **Cache-aside:** Application manages cache
+- **Write-through:** Synchronous cache updates
+- **Write-behind:** Asynchronous cache updates
+- **Refresh-ahead:** Proactive cache warming
+
+**High availability:**
+- **Master-slave replication:** For read scaling
+- **Sentinel:** Automatic failover and monitoring
+- **Redis Cluster:** Horizontal scaling and partitioning
+
+## Best Practices Summary
+**Memory optimization:**
+- Use appropriate data structures for use case
+- Avoid large keys (>10MB)
+- Configure eviction policies based on workload
+- Monitor memory usage and fragmentation
+
+**Operations:**
+- Enable persistence for important data
+- Set appropriate timeouts for connections
+- Use pipelining for bulk operations
+- Monitor slow log for performance issues
+
 
