@@ -152,8 +152,6 @@
 
 ---
 
----
-
 ## 🎯 Common System Design Examples
 
 **URL Shortener (like bit.ly):**
