@@ -259,12 +259,109 @@
 
 ---
 
-# 📚 Essential Resources & Quick Reference
+# 8. Modern Database Types
 
-## Must-Read Books
-- [Database Internals](pdf/Database-Internals.pdf) - How databases work under the hood
-- [Readings in Database Systems](pdf/Redbook-5th-Edition.pdf) - Classic papers and research
-- [Seven Databases in Seven Weeks](pdf/Seven-Databases-in-Seven-Weeks.pdf) - Practical NoSQL overview
+## NewSQL — Scalable SQL
+
+**Vấn đề:** Traditional SQL không horizontal scale tốt; NoSQL hi sinh ACID.
+**NewSQL giải pháp:** Distributed SQL với ACID + horizontal scalability.
+
+### CockroachDB
+- **Architecture:** Distributed, multi-region, automatic sharding, Raft consensus
+- **SQL compatible:** PostgreSQL wire protocol → dùng được với JDBC/Hibernate
+- **Use cases:** Global financial transactions, multi-region active-active
+- **Trade-offs:** Higher latency (Raft commits), complex ops, expensive
+
+### TiDB (PingCAP)
+- **Architecture:** Separated compute (TiDB) + storage (TiKV) + analytics (TiFlash)
+- **MySQL compatible:** drop-in replacement với MySQL protocol
+- **HTAP:** Hybrid Transactional/Analytical Processing — cùng một DB cho OLTP + OLAP
+- **Popular in:** Vietnam/Southeast Asia fintech (Tyme Bank, MoMo region)
+
+### Aurora (Amazon)
+- **Architecture:** MySQL/PostgreSQL compatible, distributed storage, 6-way replication
+- **Global Database:** replicate across regions với <1s lag
+- **Serverless v2:** auto-scale compute — pay per use
+- **Use cases:** AWS-native apps cần scale, Aurora Serverless cho variable workloads
+
+**NewSQL vs Traditional:**
+| | Traditional SQL | NewSQL |
+|---|---|---|
+| Scale | Vertical + read replicas | Horizontal (automatic sharding) |
+| ACID | ✅ Full | ✅ Full (distributed transactions) |
+| Latency | Low (~1ms) | Higher (consensus overhead, 5-50ms) |
+| Ops complexity | Moderate | High |
+| Use when | <10TB, single region | Multi-region, >10TB, global |
+
+---
+
+## Time-Series Databases
+
+**Vấn đề:** Metrics, IoT, financial ticks — data theo thời gian, writes nhiều, queries theo time range.
+**Time-series DB:** Tối ưu hoá cho time-ordered data với auto-retention và time-based aggregation.
+
+### InfluxDB
+- **Line protocol:** `cpu,host=server1,region=us value=0.65 1609459200000000000` (tag=value format)
+- Query with InfluxQL or Flux query language (time-range grouping, aggregations)
+- **Use cases:** System metrics, application metrics (alternative cho Prometheus long-term storage)
+
+### TimescaleDB
+- **PostgreSQL extension** — dùng được với toàn bộ PostgreSQL ecosystem
+- **Hypertables:** automatic time-based partitioning
+- **Continuous aggregates:** pre-compute time-bucket aggregations
+- `create_hypertable('metrics', 'time')` — convert existing table to hypertable
+- `time_bucket('5 minutes', time)` — time-grouped queries with standard SQL
+- **Use cases:** Dùng existing PostgreSQL, cần SQL flexibility, financial data
+
+### Prometheus (metrics + time-series)
+- Pull-based metrics collection, không dùng cho application data
+- Best for monitoring/alerting (xem Observability section)
+
+**Decision:**
+- **InfluxDB:** standalone time-series, IoT, không cần SQL
+- **TimescaleDB:** đã có PostgreSQL, cần time-series + relational joins
+- **Prometheus:** monitoring/alerting — không phải application DB
+
+---
+
+## Vector Databases
+
+**Vấn đề:** AI/ML applications cần tìm "similar" items (semantic search, recommendations, RAG).
+**Vector DB:** Lưu trữ và tìm kiếm theo similarity (cosine distance, dot product) trên high-dimensional vectors.
+
+### Các loại Vector DB
+| DB | Type | Strength |
+|---|---|---|
+| **pgvector** | PostgreSQL extension | Dùng existing PG, SQL joins |
+| **Pinecone** | Managed cloud | Easy ops, serverless |
+| **Weaviate** | Self-hosted/cloud | Hybrid search (vector + BM25) |
+| **Qdrant** | Self-hosted/cloud | Rust-based, high perf |
+| **Chroma** | Embedded | Dev/testing, easy setup |
+| **Milvus** | Self-hosted | Very large scale |
+
+### pgvector (phổ biến cho Spring/Java teams)
+- Enable: `CREATE EXTENSION vector`
+- Add `vector(1536)` column (dimensions match your embedding model, e.g., 1536 for OpenAI)
+- Build IVFFlat or HNSW index on the vector column for fast similarity search
+- Query with `<=>` operator (cosine distance), `<->` (L2), `<#>` (dot product)
+- Supports hybrid: combine vector similarity with SQL `WHERE` filters
+
+### Khi nào dùng Vector DB
+- **RAG (Retrieval Augmented Generation):** tìm documents liên quan để cung cấp cho LLM
+- **Semantic search:** tìm theo ý nghĩa, không phải exact keyword
+- **Recommendation:** "users similar to this user" dựa trên behavior vectors
+- **Image similarity:** tìm ảnh giống nhau
+
+### Interview Questions — Modern DBs
+- "NewSQL giải quyết vấn đề gì?" → Horizontal scaling + ACID (không phải một trong hai)
+- "Khi nào dùng TimescaleDB thay InfluxDB?" → Đã có PostgreSQL, cần time-series + relational
+- "Vector DB là gì?" → DB lưu embeddings, tìm kiếm theo cosine similarity
+- "pgvector vs Pinecone?" → pgvector: simple, SQL joins; Pinecone: managed, large scale
+
+
+---
+
+# 📚 Essential Resources & Quick Reference
 
 ## Interview Quick Reference
 **System design applications:**
@@ -284,4 +381,3 @@
 - "How would you scale a database to handle 10x traffic?"
 - "Explain ACID properties and when you might relax them"
 - "How do you handle eventual consistency in microservices?"
-

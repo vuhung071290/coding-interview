@@ -2,234 +2,172 @@
 
 > Understanding concurrent programming for scalable backend systems
 
-## 🎯 Why Concurrency Matters for Backend Engineers
-- **Scalable applications:** Handle thousands of simultaneous users
-- **System design interviews:** Discuss threading models, async processing, distributed systems
-- **Performance optimization:** Choose right concurrency model for the workload
-- **Microservices architecture:** Handle inter-service communication efficiently
-- **Real-world debugging:** Understand race conditions, deadlocks, performance bottlenecks
-
----
-
 # 1. Fundamental Concepts
 
-## 1.1 Concurrency vs Parallelism
-**Concurrency:** Organizing multiple tasks to make progress together (dealing with many things at once)
-**Parallelism:** Actually running multiple tasks simultaneously (doing many things at once)
+## Concurrency vs Parallelism
+- **Concurrency:** Organizing multiple tasks to make progress together — about structure
+- **Parallelism:** Actually running multiple tasks simultaneously — about execution
+- Single-core: có thể concurrency (time-slicing) nhưng không parallelism
+- Multi-core: có cả hai
 
-**Key insight:** Concurrency is about structure, parallelism is about execution
-- **Single-core system:** Can have concurrency (time-slicing) but no parallelism
-- **Multi-core system:** Can have both concurrency and parallelism
+## Threading Models — When to Use
 
-## 1.2 Threading Models
-**Multithreading:**
-- **Pros:** True parallelism, shared memory access
-- **Cons:** Race conditions, complex synchronization, higher memory overhead
-- **Best for:** CPU-bound tasks, computational work
+| Model | Mechanism | Best for | Examples |
+|-------|----------|---------|---------|
+| Multithreading | OS threads, shared memory | CPU-bound | Java threads, .NET |
+| Async/Event Loop | Single thread, non-blocking I/O | I/O-bound | Node.js, Python asyncio |
+| Actor Model | Isolated processes + message passing | Distributed, fault-tolerant | Erlang, Akka |
+| Virtual Threads | JVM-managed, cheap threads | I/O-bound at scale (Java 21) | Project Loom |
 
-**Async/Event-driven:**
-- **Pros:** Single thread, no race conditions, memory efficient
-- **Cons:** Not suitable for CPU-heavy tasks, callback complexity
-- **Best for:** I/O-bound tasks, web servers, network programming
-
-**Rule of thumb for interviews:**
-- **I/O-bound workloads** → Async programming (Node.js, Python asyncio)
-- **CPU-bound workloads** → Multithreading/multiprocessing (Java threads, Go routines)
+**Rule of thumb:** I/O-bound → Async/Virtual Threads; CPU-bound → Multithreading
 
 ---
 
-# 2. Concurrency Models & When to Use Them
+# 2. Synchronization Primitives
 
-## 2.1 Event Loop (Async/Await)
-**How it works:** Single thread with non-blocking I/O, event-driven callbacks
-**Examples:** Node.js, Python asyncio, JavaScript
+## Common Problems
+- **Race Condition:** multiple threads accessing shared state, outcome depends on timing
+- **Deadlock:** threads waiting for each other indefinitely
+- **Starvation:** thread cannot get resources, indefinitely postponed
 
-**Pros:**
-- No race conditions (single thread)
-- Memory efficient (no thread overhead)
-- Great for I/O-heavy applications
+## Primitives
+- **Mutex/Lock:** mutual exclusion — 1 thread at a time in critical section
+- **Semaphore:** counting lock — N threads allowed concurrently
+- **Read-Write Lock:** multiple readers OR single writer
+- **Atomic Operations:** hardware-level guarantee for simple ops (CAS, compare-and-swap)
+- **Condition Variables:** wait/notify mechanism for thread coordination
 
-**Cons:**
-- CPU-heavy tasks block the entire loop
-- Callback complexity ("callback hell")
-
-**Use cases:** Web servers, API gateways, real-time applications
-
-## 2.2 Multithreading
-**How it works:** Multiple threads sharing memory, preemptive scheduling
-**Examples:** Java threads, .NET threads, C++ std::thread
-
-**Pros:**
-- True parallelism on multi-core systems
-- Good for CPU-intensive tasks
-
-**Cons:**
-- Race conditions and synchronization complexity
-- Higher memory overhead (stack per thread)
-
-**Use cases:** CPU-bound processing, parallel algorithms, compute-heavy applications
-
-## 2.3 Actor Model / CSP
-**How it works:** Isolated processes communicating via messages
-**Examples:** Erlang/Elixir, Akka, Go channels
-
-**Pros:**
-- No shared state, reduces bugs
-- Fault isolation (one actor failure doesn't affect others)
-- Natural distribution across machines
-
-**Cons:**
-- Message passing overhead
-- More complex for shared data scenarios
-
-**Use cases:** Distributed systems, fault-tolerant applications, messaging systems
-
-**Interview insight:** Choose based on your bottleneck - I/O bound vs CPU bound vs fault tolerance needs
+## Thread-Safe Strategies
+- **Lock-based:** synchronized, ReentrantLock — simple, potential contention
+- **Lock-free:** Atomic classes, CAS — faster, harder to reason about
+- **Immutable data:** no mutation → no synchronization needed
+- **Thread-local storage:** each thread has its own copy
+- **Concurrent collections:** ConcurrentHashMap, CopyOnWriteArrayList
 
 ---
 
-# 3. Synchronization & Thread Safety
+# 3. Java Concurrency Tools
 
-## 3.1 Common Problems
-**Race Condition:** Multiple threads accessing shared data, outcome depends on timing
-**Deadlock:** Two threads waiting for each other indefinitely
-**Starvation:** Thread can't get resources, indefinitely postponed
+## Executors Framework
+- **FixedThreadPool:** fixed N threads — predictable resource usage
+- **CachedThreadPool:** create threads as needed, reuse idle — unbounded, risk of OOM
+- **ScheduledExecutorService:** delayed and periodic execution
+- **VirtualThreadPerTaskExecutor:** Java 21 — 1 virtual thread per task
 
-## 3.2 Synchronization Primitives
-**Mutex/Lock:** Mutual exclusion, only one thread can access critical section
-**Semaphore:** Counting lock, allows N threads to access resource
-**Read-Write Lock:** Multiple readers OR single writer
-**Atomic Operations:** Hardware-level guarantees for simple operations
-**Condition Variables:** Wait/notify mechanism for thread coordination
+## CompletableFuture (Async pipelines)
+- Chain async operations: `thenApply`, `thenCompose`, `thenCombine`
+- Error handling: `exceptionally`, `handle`
+- Combine multiple futures: `allOf`, `anyOf`
 
-## 3.3 Thread-Safe Strategies
-**Lock-based:** Use mutexes, locks (traditional approach)
-**Lock-free:** Use atomic operations, compare-and-swap (CAS)
-**Immutable data:** Never modify, always create new (functional approach)
-**Thread-local storage:** Each thread has its own copy
-**Concurrent collections:** Built-in thread-safe data structures
-
-**Senior insight:** Lock-free is faster but harder to implement correctly. Start with locks, optimize later if needed.
+## Memory Model (JMM)
+- **volatile:** ensures visibility across threads, prevents reordering — not atomic
+- **synchronized:** mutual exclusion + memory synchronization
+- **happens-before:** A happens-before B → A's effects visible to B
+  - Thread start/join, lock acquire/release, volatile write/read, final field init
 
 ---
 
-# 4. Memory Models & Visibility
+# 4. Virtual Threads (Java 21) — Project Loom
 
-## 4.1 Memory Model Basics
-**Atomicity:** Operation completes fully or not at all
-**Visibility:** When changes made by one thread become visible to others
-**Ordering:** Prevents compiler/CPU from reordering instructions
+> Giải quyết "thread per request" bottleneck mà không cần reactive programming
 
-## 4.2 Happens-Before Relationship
-Key rule: If A happens-before B, then A's effects are visible to B
-- Thread start/join operations
-- Lock acquire/release operations
-- Volatile variable operations
-- Final field initialization
+## Vấn đề với Platform Threads
+- 1 request → 1 OS thread (platform thread) ≈ 1MB stack
+- 10K threads × 1MB = 10GB RAM chỉ cho thread stacks
+- Blocking I/O (DB query, HTTP call): thread bị "park" — lãng phí OS thread
+- Throughput bị giới hạn bởi số threads, không phải CPU hay I/O capacity
 
-## 4.3 Common Issues
-**Volatile keyword:** Ensures visibility and prevents reordering (not atomicity)
-**False sharing:** Different variables in same cache line cause performance issues
-**Memory fences:** Explicit synchronization barriers
+## Virtual Thread Model
+- 1 request → 1 virtual thread (JVM-managed, không phải OS thread)
+- 1 JVM **carrier thread** (OS thread) multiplexes NHIỀU virtual threads
+- Khi virtual thread bị block → unmount từ carrier thread → carrier chạy thread khác
+- Virtual thread được mount lại khi ready to continue
+- Chi phí: vài KB/virtual thread → có thể chạy hàng triệu
 
-**Interview tip:** Know the difference between volatile and synchronized in Java, or equivalent in your language
+## So sánh
+
+| | Platform Thread | Virtual Thread | Reactive (WebFlux) |
+|---|---|---|---|
+| Memory per unit | ~1MB | ~few KB | ~minimal |
+| Programming model | Simple (blocking) | **Simple (blocking)** | Complex (non-blocking) |
+| I/O scaling | Limited | **Excellent** | Excellent |
+| CPU-bound | Good | Same as platform | Same |
+| Ecosystem compatibility | Full | Full | Limited |
+
+## Pinning — Vấn đề quan trọng
+- Virtual thread bị **pinned** (không thể unmount) khi trong `synchronized` block
+- Pinned → carrier thread bị block → defeats the purpose
+- **Fix:** dùng `ReentrantLock` thay `synchronized` trong I/O paths
+- Native method calls (JNI) cũng gây pinning — không thể fix
+
+## Structured Concurrency
+- Chạy parallel tasks theo cây phân cấp — parent task quản lý child tasks
+- Nếu 1 child fail → tất cả siblings tự động bị cancel
+- Tránh **task leaks** (tasks tiếp tục chạy sau khi scope đóng)
+- API: `StructuredTaskScope.ShutdownOnFailure`, `ShutdownOnSuccess`
+
+## ScopedValue (Java 21) — thay ThreadLocal
+- ThreadLocal: shared mutable per-thread state → memory leaks trong thread pools
+- ScopedValue: immutable, scoped to a task tree → better fit với virtual threads
+
+## Spring Boot 3.2+
+- Bật `spring.threads.virtual.enabled=true` → Tomcat dùng virtual threads tự động
+- Không cần đổi code — existing blocking code scales tốt
+
+## Virtual Threads vs Reactive
+- **Virtual Threads:** dùng blocking libraries (JDBC, RestTemplate), simpler code, great for most I/O-bound apps
+- **Reactive/WebFlux:** cần streaming, back-pressure, SSE, full reactive pipeline — more complex
+- **2024+ recommendation:** Virtual Threads trừ khi có specific reactive requirements
+
+## Interview Questions
+- "Virtual Thread là gì?" → Lightweight JVM-managed threads, millions possible, blocking I/O không block OS thread
+- "Platform Thread vs Virtual Thread?" → OS-managed 1MB vs JVM-managed few KB
+- "Pinning là gì, làm sao tránh?" → synchronized → ReentrantLock trong I/O-heavy paths
+- "Virtual Threads có thay thế hoàn toàn Reactive không?" → Cho I/O-bound apps thì có; streaming/SSE vẫn cần Reactive
 
 ---
 
-# 5. Async Programming Patterns
+# 5. Reactive Programming
 
-## 5.1 Async/Await Pattern
-**Benefits:**
-- Write asynchronous code that looks synchronous
-- No callback nesting
-- Exception handling works naturally
+## Concepts
+- Treat data as continuous **streams** — push-based, event-driven
+- **Operators:** map, filter, flatMap, merge, zip, buffer
+- **Backpressure:** slow consumers signal fast producers to slow down
 
-**Example flow:** Async functions chain operations naturally without blocking
+## Tools
+- **Project Reactor:** Flux (0-N items), Mono (0-1 item) — Spring WebFlux
+- **RxJava:** Observable, Single, Completable
+- **Kotlin Coroutines:** coroutine-based async (simpler than reactive)
 
-## 5.2 Reactive Programming
-**Stream-based processing:** Treat data as continuous streams
-**Operators:** map, filter, merge, combine streams
-**Backpressure:** Handle fast producers, slow consumers
-
-**Use cases:** Real-time data processing, event streams, UI interactions
-
-## 5.3 Future/Promise Patterns
-**Future/Promise:** Placeholder for a value that will be available later
-**Composition:** Chain operations, handle errors, combine multiple futures
-**Cancellation:** Ability to cancel in-progress operations
-
-**Senior insight:** Modern applications use structured concurrency to prevent task leaks and ensure proper cleanup
+## Use Cases
+- Server-Sent Events (SSE), WebSocket streams
+- Real-time data pipelines
+- Non-blocking DB access (R2DBC)
 
 ---
 
 # 6. Performance Optimization
 
-## 6.1 Common Bottlenecks
-**Context switching:** OS switching between threads (expensive)
-**Lock contention:** Multiple threads waiting for the same lock
-**False sharing:** Cache line bouncing between CPU cores
-**Memory allocation:** Frequent allocation/deallocation overhead
+## Common Bottlenecks
+- **Context switching:** OS switching between threads (expensive for many threads)
+- **Lock contention:** multiple threads waiting on same lock
+- **False sharing:** different variables in same CPU cache line
+- **Thread pool starvation:** all threads blocked on I/O
 
-## 6.2 Optimization Strategies
-**Thread pools:** Reuse threads instead of creating new ones
-**Lock-free algorithms:** Use atomic operations where possible
-**Work-stealing queues:** Balance load across threads
-**Batch processing:** Process multiple items together
-**CPU affinity:** Pin threads to specific cores
-
-## 6.3 Monitoring & Profiling
-**Key metrics:** Thread count, lock contention, CPU utilization per core
-**Tools:** JProfiler, async profilers, OS tools (top, htop)
-**Bottleneck identification:** CPU vs I/O vs memory vs lock contention
-
-**Interview insight:** Always measure before optimizing. Premature optimization is the root of all evil.
+## Optimization Strategies
+- Thread pools: reuse threads, right-size pool (N CPU + buffer for I/O blocking)
+- Lock-free algorithms where possible
+- Work-stealing queues (ForkJoinPool)
+- Virtual threads for I/O-bound workloads
 
 ---
 
-# 7. Real-World Applications & System Design
+# 📚 Quick Reference
 
-## 7.1 Web Server Architecture
-**Traditional:** Thread-per-request (Apache)
-**Modern:** Event loop (Nginx, Node.js) or virtual threads (Java Loom)
-**Hybrid:** Worker pools for CPU tasks, async for I/O
-
-## 7.2 Microservices Communication
-**Async messaging:** Kafka, RabbitMQ for decoupling services
-**Circuit breakers:** Prevent cascade failures in distributed systems
-**Timeout patterns:** Every external call needs timeouts
-
-## 7.3 Database Connection Patterns
-**Connection pooling:** Reuse database connections
-**Read replicas:** Distribute read load across multiple database instances
-**Async database drivers:** Non-blocking database operations
-
-## 7.4 Caching Strategies
-**Thread-safe caches:** ConcurrentHashMap, Redis for distributed caching
-**Cache-aside pattern:** Application manages cache explicitly
-**Write-through/write-behind:** Different consistency guarantees
-**System design connection:** Links to [Database patterns](databases.md) and [Redis caching](../3-Backend-Technology-Stack/redis.md)
-
----
-
-# 📚 Essential Resources & Quick Reference
-
-## Books & Materials
-- [Java Concurrency in Practice](../3-Backend-Technology-Stack/pdf/Java-concurrency-in-practice.pdf) - **THE concurrency book**
-- [Operating Systems: Three Easy Pieces](pdf/Operating-Systems-Three-Easy-Pieces.pdf) - OS-level concurrency
-
-## Interview Quick Reference
-**System design applications:**
-- Discuss threading model for your web server design
-- Explain how to handle concurrent database connections
-- Design async processing pipelines for microservices
-
-**Code interview patterns:**
-- Producer-consumer problems (bounded queues)
-- Thread pool implementations
-- Rate limiters and circuit breakers
+**Code interview patterns:** producer-consumer (BlockingQueue), thread pool implementations, rate limiters, circuit breakers
 
 **Key discussion points:**
-- Trade-offs between different concurrency models
+- Trade-offs between concurrency models (thread-per-request vs async vs virtual threads)
 - How to debug race conditions and deadlocks
 - Performance characteristics and bottlenecks
 - Failure handling and graceful degradation
@@ -237,4 +175,4 @@ Key rule: If A happens-before B, then A's effects are visible to B
 **Connection to other topics:**
 - [Networking](networking.md): Async I/O, connection pooling
 - [Databases](databases.md): Transaction isolation, connection management
-- [Java](../3-Backend-Technology-Stack/java.md): Executor framework, concurrent collections  
+- [Java](../3-Backend-Technology-Stack/java.md): Executor framework, concurrent collections

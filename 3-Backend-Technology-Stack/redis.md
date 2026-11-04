@@ -2,18 +2,6 @@
 
 > In-memory data structure store for high-performance caching, sessions, and real-time applications
 
-## 🎯 Why Redis Matters for Backend Engineers
-- **Performance optimization:** Sub-millisecond response times, 100K+ ops/sec
-- **System design interviews:** Essential for caching layers, session stores, rate limiters
-- **Scalability patterns:** Distributed caching, session clustering, pub/sub messaging
-- **Production reliability:** Battle-tested in high-traffic systems (Twitter, GitHub, Instagram)
-- **Versatile data structures:** Strings, hashes, lists, sets, sorted sets, streams, bitmaps
-- **Real-time features:** Pub/sub, streams, distributed locks, leaderboards
-
-**Focus:** Production Redis patterns for scalable backend systems and system design interviews.
-
----
-
 ## 1. Redis Overview
 - In-memory data structure store → cực nhanh (single-thread, event loop).
 - Use cases: cache, session, rate-limiter, leaderboard, distributed lock, pub/sub, streams.

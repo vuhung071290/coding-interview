@@ -2,288 +2,196 @@
 
 > Essential Java knowledge for backend development and technical interviews
 
-## 🎯 Why Java Expertise Matters for Backend Engineers
-- **Production systems:** Most enterprise backends run on JVM (Java, Kotlin, Scala)
-- **Performance optimization:** JVM tuning, garbage collection, memory management
-- **Concurrency mastery:** Handle high-traffic systems with thread safety
-- **Framework foundation:** Spring, microservices, enterprise patterns built on Java
-- **Interview advantage:** Deep JVM knowledge sets senior engineers apart
-- **System design:** Memory models, performance characteristics affect architecture decisions
-
-**Focus:** Production-ready Java knowledge that directly applies to backend systems and interviews.
-
----
-
 # 1. JVM Mastery & Performance
 
-## 1.1 JVM Architecture & Runtime
-**JVM Components:**
+## 1.1 JVM Architecture
 - **ClassLoader:** Load → Verify → Prepare → Resolve → Initialize
 - **Runtime Areas:** Heap (shared), Stack (per-thread), Method Area/Metaspace
 - **Execution Engine:** Interpreter → JIT Compiler (C1/C2) → Optimized machine code
 - **TLAB:** Thread Local Allocation Buffer for fast object allocation
 
-**Memory Model:**
-- **Heap:** Objects and arrays, managed by GC, shared across threads
-- **Stack:** Method frames, local variables, thread-local and fast
-- **Method Area:** Class metadata, constant pool (Metaspace in Java 8+)
+## 1.2 Memory Areas
+- **Heap:** Objects and arrays, GC-managed, shared across threads
+- **Stack:** Method frames, local variables — thread-local, fast
+- **Metaspace:** Class metadata (replaced PermGen in Java 8+)
 
-## 1.2 Java Memory Model (JMM) & Thread Safety
-**Happens-before relationships:**
-- **Monitor operations:** unlock happens-before subsequent lock
-- **Volatile variables:** write happens-before subsequent read
-- **Thread operations:** start/join operations establish ordering
-- **Final fields:** initialization happens-before any read
+## 1.3 GC Algorithms
 
-**Practical implications:**
-- **volatile:** Ensures visibility across threads, prevents reordering
-- **synchronized:** Provides mutual exclusion and memory synchronization
-- **Atomic classes:** Lock-free thread-safe operations
+| GC | Characteristics | Use When |
+|----|----------------|----------|
+| Serial GC | Single-threaded | Small apps, dev |
+| Parallel GC | Throughput-focused | Batch processing |
+| G1 GC | Low pause (~100ms), large heaps (default Java 9+) | Web applications |
+| ZGC | Sub-millisecond pauses (Java 21: generational ZGC) | Real-time, latency-critical |
+| Shenandoah | Concurrent, very low latency | Low-latency production |
 
-**Interview insight:** JMM is crucial for understanding concurrent programming bugs and solutions
+**Production settings:** `-Xms = -Xmx` (avoid heap resizing overhead)
 
-## 1.3 GC Quick Reference for Backend Engineers
-• **Parallel GC** - Default, Moderate pause times → Batch processing
-• **G1 GC** - Large heaps (4GB+), Low pause (~100ms) → Web applications
-• **ZGC/Shenandoah** - Ultra-low latency (<10ms) → Real-time systems
+## 1.4 Memory Troubleshooting
 
-**Production Settings:** `-Xms = -Xmx` (avoid heap resizing overhead)
+**OutOfMemoryError types:**
+- `Heap space` — most common → increase heap or fix leaks
+- `Metaspace` — too many classes → framework/classloader issue
+- `Direct buffer memory` — NIO/Netty off-heap exhaustion
 
-## 1.4 Memory Troubleshooting Checklist
-**OutOfMemoryError Types:**
-- 🔥 **Heap space:** Most common → Increase heap or fix leaks
-- ⚡ **Metaspace:** Too many classes → Framework issue
-- 💾 **Direct buffer:** Off-heap exhaustion → NIO/Netty
+**Common leak sources:** static collections, ThreadLocal cleanup missed in pools, event listeners, classloader leaks in app server redeployment
 
-**Common Memory Leak Sources:**
-- Static collections, ThreadLocal cleanup, Event listeners
-- **Classloader leaks:** In application servers during redeployment
+**Tools:** JProfiler, VisualVM, heap dumps (`jmap -dump`), async profilers (async-profiler, Flame graphs)
 
-**Senior insight:** Use profilers (JProfiler, VisualVM) and heap dumps for memory analysis
+## 1.5 JVM Troubleshooting Commands
+- `jps` — list JVM processes
+- `jstack <pid>` — thread dump (deadlock detection)
+- `jmap -histo <pid>` — heap histogram
+- `jcmd <pid> GC.run` — force GC
+- `jstat -gc <pid>` — GC stats live
 
 ---
 
-# 2. Java Core & Object-Oriented Design
+# 2. Java Core
 
-## 2.1 OOP Principles & Polymorphism
-**Four pillars:**
-- **Encapsulation:** Hide internal details, expose clean interfaces
-- **Abstraction:** Focus on what an object does, not how
-- **Inheritance:** Code reuse and establishing "is-a" relationships
-- **Polymorphism:** One interface, multiple implementations
+## 2.1 OOP Principles
+- **Encapsulation:** hide internals, expose clean interface
+- **Abstraction:** what it does, not how
+- **Inheritance:** is-a relationships, code reuse
+- **Polymorphism:** one interface, multiple implementations
 
 **Method dispatch:**
-- **Overloading:** Compile-time resolution based on parameters
-- **Overriding:** Runtime resolution based on actual object type
-- **Dynamic dispatch:** JVM chooses method based on object's actual class
+- **Overloading:** compile-time (parameter types)
+- **Overriding:** runtime (actual object type — dynamic dispatch)
 
-## 2.2 Essential Java Features
-**String handling:**
-- **Immutability:** Security, thread safety, string pool optimization
-- **StringBuilder:** Mutable, efficient for concatenation (not thread-safe)
-- **String pool:** Literal strings cached for memory efficiency
+## 2.2 Collections Framework
 
-**equals() and hashCode() contract:**
-- If `a.equals(b)` is true, then `a.hashCode() == b.hashCode()`
-- Override both together for HashMap/HashSet correctness
-- Common bug: forgetting to override hashCode when overriding equals
+| Type | Implementation | Complexity | Notes |
+|------|---------------|------------|-------|
+| List | ArrayList | O(1) get, O(n) insert | Dynamic array |
+| List | LinkedList | O(n) get, O(1) insert | Doubly-linked |
+| Set | HashSet | O(1) avg | Hash table |
+| Set | TreeSet | O(log n) | Red-black tree, sorted |
+| Map | HashMap | O(1) avg | Hash table |
+| Map | TreeMap | O(log n) | Red-black tree, sorted |
+| Map | LinkedHashMap | O(1) avg | Insertion order |
 
-**Object lifecycle:**
-- **Constructors:** Initialize object state properly
-- **Garbage collection:** Automatic memory management, no explicit destructors
-- **finalize():** Deprecated, unreliable cleanup mechanism
+**HashMap internals:** array of buckets → linked list/tree (Java 8+: treeify when >8 entries). Resize at 75% load factor.
 
-## 2.3 Collections Framework & Generics
-**Core interfaces:**
-- **List:** ArrayList (dynamic array), LinkedList (doubly-linked)
-- **Set:** HashSet (hash table), TreeSet (red-black tree)
-- **Map:** HashMap (hash table), TreeMap (red-black tree), LinkedHashMap (insertion order)
+## 2.3 equals() and hashCode() contract
+- If `a.equals(b)` → `a.hashCode() == b.hashCode()`
+- Override **both** together — breaking this breaks HashMap/HashSet correctness
 
-**Performance characteristics:**
-- **ArrayList:** O(1) access, O(n) insertion/deletion (middle)
-- **HashMap:** O(1) average get/put, O(n) worst case
-- **TreeMap/TreeSet:** O(log n) operations, sorted order
-
-**Generics benefits:**
-- **Type safety:** Compile-time error detection
-- **Performance:** Eliminates casting overhead
-- **Code clarity:** Self-documenting interfaces
-
-**Senior insight:** Choose data structure based on access patterns, not just convenience
+## 2.4 String
+- **Immutable:** security, thread safety, string pool optimization
+- **String pool:** literals cached for memory efficiency
+- **StringBuilder:** mutable, use for concatenation in loops (not thread-safe)
+- **StringBuffer:** thread-safe StringBuilder (rarely needed)
 
 ---
 
-# 3. Java Concurrency for Backend Systems
+# 3. Java Concurrency
 
-## 3.1 Thread Safety Fundamentals
-**Thread lifecycle:** NEW → RUNNABLE → BLOCKED/WAITING/TIMED_WAITING → TERMINATED
+## Thread Safety Mechanisms
+- **volatile:** memory visibility + reordering prevention — NOT atomic
+- **synchronized:** mutual exclusion + memory sync (reentrant)
+- **Atomic classes:** lock-free thread-safe ops (AtomicInteger, AtomicReference, etc.)
+- **ReentrantLock:** flexible locking — tryLock, timed lock, fairness
+- **ReadWriteLock:** multiple readers OR exclusive writer
+- **StampedLock:** optimistic reads for high-performance
 
-**Synchronization mechanisms:**
-- **synchronized:** Mutual exclusion + memory visibility (reentrant)
-- **volatile:** Memory visibility + prevents reordering (not atomic)
-- **Atomic classes:** Lock-free thread-safe operations (AtomicInteger, etc.)
+## Executors Framework
+- `FixedThreadPool(n)` — bounded, predictable
+- `CachedThreadPool` — unbounded, risk OOM under load
+- `ScheduledExecutorService` — periodic tasks
+- `VirtualThreadPerTaskExecutor` — Java 21, virtual threads per task
 
-**Thread coordination:**
-- **wait()/notify():** Object-level coordination primitive
-- **Thread.sleep():** Pause current thread for specified time
-- **Thread.join():** Wait for another thread to complete
+## Concurrent Collections
+- `ConcurrentHashMap` — O(1), segment-level locking → better than Hashtable
+- `CopyOnWriteArrayList` — O(n) writes, O(1) reads — read-heavy scenarios
+- `BlockingQueue` variants — producer-consumer patterns, backpressure
 
-## 3.2 Advanced Concurrency Tools
-**Explicit locks (java.util.concurrent.locks):**
-- **ReentrantLock:** More flexible than synchronized
-- **ReadWriteLock:** Multiple readers, exclusive writer
-- **StampedLock:** Optimistic reads for high-performance scenarios
+## Common Pitfalls
+- Race conditions: multiple threads modifying shared state
+- Deadlock: lock ordering violations (always lock in consistent order)
+- ThreadLocal leaks in thread pools: always clean up in `finally`
 
-**Executors Framework:**
-- **FixedThreadPool:** Fixed number of threads
-- **CachedThreadPool:** Creates threads as needed
-- **ScheduledExecutorService:** Delayed and periodic execution
-- **CompletableFuture:** Asynchronous programming with pipelines
-
-## 3.3 Concurrent Collections
-**Thread-safe collections:**
-- **ConcurrentHashMap:** Lock-free segments, CAS-based operations
-- **CopyOnWriteArrayList:** Copy-on-write, optimized for reads
-- **BlockingQueue variants:** Producer-consumer patterns
-
-**Performance characteristics:**
-- **ConcurrentHashMap:** O(1) operations, better than Hashtable
-- **CopyOnWriteArrayList:** O(n) writes, O(1) reads
-- **LinkedBlockingQueue:** Unbounded, good for producer-consumer
-
-## 3.4 Common Concurrency Issues
-**Problems to avoid:**
-- **Race conditions:** Multiple threads modifying shared state
-- **Deadlock:** Threads waiting for each other indefinitely
-- **Memory leaks:** ThreadLocal not cleaned up in thread pools
-
-**Best practices:**
-- Prefer immutable objects when possible
-- Use thread-safe collections over synchronized wrappers
-- Always clean up ThreadLocal in web applications
-- Understand happens-before relationships
-
-**Backend relevance:** Links to [Concurrency patterns](../1-Computer-Science/concurrent.md) and distributed system considerations
+> Virtual Threads → see [concurrent.md](../1-Computer-Science/concurrent.md)
 
 ---
 
-# 4. Modern Java Features & Best Practices
+# 4. Modern Java — Features 8 to 21
 
-## 4.1 Java 8+ Functional Programming
-**Lambda expressions:** Concise function syntax, replace anonymous classes
-**Stream API:** Functional-style data processing with filter, map, collect operations
-**Method references:** Cleaner lambda syntax với :: operator
+## Java 8
+- **Lambda expressions:** `(x) -> x * 2` — replace anonymous classes
+- **Stream API:** functional-style data processing — filter, map, collect, reduce
+- **Optional:** null-safe programming — avoid NPE, explicit optionality
+- **Method references:** `String::length`, `System.out::println`
+- **CompletableFuture:** async programming with method chaining
 
-## 4.2 Optional & Error Handling
-**Optional:** Null-safe programming
-- Avoid null pointer exceptions
-- Express optionality explicitly
-- Chain operations safely
+## Java 9–15 (key features)
+- **Modules (9):** modular JDK, explicit dependencies
+- **var (10):** local variable type inference
+- **Switch expressions (14):** returns values, arrow syntax
+- **Text Blocks (15):** multi-line strings with `"""`
 
-**Exception handling best practices:**
-- **Checked exceptions:** IOException, SQLException (must be handled)
-- **Unchecked exceptions:** RuntimeException subclasses
-- **Try-with-resources:** Automatic resource management
-- Never swallow exceptions without logging
+## Java 16–21 (LTS — Key for Interviews)
 
-## 4.3 CompletableFuture & Async Programming
-**CompletableFuture:** Asynchronous programming với method chaining
-**Backend applications:** Non-blocking I/O, better resource utilization
+### Records (16+)
+- Immutable data carrier — auto-generates constructor, getters, equals/hashCode/toString
+- Use for: DTOs, value objects, response/request types
+- Compact constructor available for validation
 
-# 5. Backend Development & Production Considerations
+### Sealed Classes (17+)
+- Define **closed hierarchy** — compiler knows all subtypes
+- Used with pattern matching switch — exhaustive (no default needed)
+- Use for: domain algebraic types, payment result types (Success/Failure/Pending)
 
-## 5.1 I/O & Performance
-**Traditional I/O (Blocking):**
-- InputStream/OutputStream for binary data
-- Reader/Writer for character data
-- Blocking operations, one thread per connection
+### Pattern Matching (16–21)
+- `instanceof` without cast: `if (obj instanceof String s)`
+- Switch patterns: match on type + deconstruct — exhaustive checking with sealed classes
 
-**NIO (Non-blocking I/O):**
-- Channels, Buffers, Selectors for scalable I/O
-- Memory-mapped files for large file processing
-- Better for high-concurrency servers
+### Virtual Threads / Project Loom (21)
+- Lightweight JVM-managed threads — millions possible
+- Simple blocking code với scalability của reactive
+- Spring Boot 3.2+: `spring.threads.virtual.enabled=true`
+- → Deep dive: [concurrent.md](../1-Computer-Science/concurrent.md)
 
-## 5.2 Testing & Code Quality
-**Testing fundamentals:**
-- **JUnit:** Standard Java testing framework
-- **Mockito:** Mock external dependencies (mock(), when(), verify())
-- **Test types:** Unit tests vs Integration tests vs End-to-end tests
+### Structured Concurrency (21)
+- Parallel tasks với automatic cancellation if any fail
+- `StructuredTaskScope.ShutdownOnFailure` / `ShutdownOnSuccess`
 
-**Best practices:**
-- Test-driven development (TDD) mindset
-- Mock external services and databases
-- Use dependency injection for testability
+### Sequenced Collections (21)
+- `getFirst()`, `getLast()`, `reversed()` on List/Deque — O(1) on ArrayList
 
-## 5.3 Build Tools & Project Management
-**Maven vs Gradle:**
-- **Maven:** XML-based, convention over configuration, mature ecosystem
-- **Gradle:** Groovy/Kotlin DSL, faster builds, more flexible
-
-**Multi-module projects:** Separate concerns, shared dependencies, easier maintenance
-
-## 5.4 Security Essentials
-**Java Cryptography Architecture (JCA):**
-- MessageDigest for hashing (SHA-256, avoid MD5)
-- Cipher for encryption (AES, avoid DES)
-- SecureRandom for cryptographically strong randomness
-
-**Security principles:**
-- Never implement your own crypto
-- Use proven libraries and algorithms
-- Validate all input, sanitize output
+### ZGC Generational (21)
+- Generational ZGC → production-ready, sub-millisecond pauses
 
 ---
 
-# 6. Interview Preparation & System Design Connections
+# 5. Best Practices & Security
 
-## 6.1 Core Java Interview Topics
-**Must-know concepts:**
-- JVM architecture and memory management
-- Concurrency: synchronized, volatile, thread safety
-- Collections: HashMap internals, concurrent collections
-- Exception handling and best practices
-- Modern Java features: Streams, Optional, CompletableFuture
+## Code Quality
+- Prefer immutable objects; `final` fields, Collections.unmodifiableXxx
+- Use try-with-resources for all Closeable resources
+- Never swallow exceptions silently — log at minimum
+- Choose data structures by access patterns, not convenience
 
-## 6.2 System Design Applications
-**Java in backend systems:**
-- **Microservices:** Spring Boot applications, containerization
-- **High-throughput systems:** JVM tuning, concurrent programming
-- **Data processing:** Stream processing, batch jobs
-- **API development:** RESTful services, async processing
-
-## 6.3 Performance Optimization
-**JVM tuning for production:**
-- Heap sizing and GC algorithm selection
-- Profiling tools: JProfiler, VisualVM, async profilers
-- Memory leak detection and resolution
-- Thread pool sizing and monitoring
-
-**Code optimization:**
-- Choose appropriate data structures
-- Minimize object allocation in hot paths
-- Use primitive collections for performance-critical code
-- Profile before optimizing
+## Security Essentials
+- Hashing: SHA-256+ (avoid MD5, SHA-1)
+- Encryption: AES (avoid DES)
+- Use `SecureRandom` for cryptographic randomness
+- **Never** implement own crypto — use proven libraries (Bouncy Castle, etc.)
+- Validate all external input, sanitize output
 
 ---
 
-# 📚 Essential Resources & Quick Reference
+# 📚 Essential Resources
 
-## Must-Read Books
-- [Effective Java](pdf/Effective-Java-3rd-Edition.pdf) - **THE Java best practices book**
-- [Java Concurrency in Practice](pdf/Java-concurrency-in-practice.pdf) - Essential for concurrent programming
-- [Java Performance: The Definitive Guide](pdf/Java-Performance-The-Definitive-Guide.pdf) - Production optimization
+- **Effective Java** (3rd ed.) — THE Java best practices book
+- **Java Concurrency in Practice** — Essential for concurrent programming
+- **Java Performance: The Definitive Guide** — Production optimization
 
-## Interview Quick Reference
-**System design relevance:**
-- JVM memory model for caching strategies
-- Concurrency patterns for scalable systems
-- Collection performance characteristics for data structure choices
-- Async programming for non-blocking architectures
-
-**Common interview questions:**
-- "Explain how HashMap works internally"
-- "What's the difference between synchronized and volatile?"
-- "How do you handle memory leaks in Java applications?"
-- "Design a thread-safe singleton"
-- "Explain garbage collection and when to tune it"
-
+## Common Interview Questions
+- "Explain how HashMap works internally" → hash table, bucket, treeify, resize
+- "What's the difference between synchronized and volatile?" → visibility+atomicity vs visibility only
+- "How do you handle memory leaks in Java?" → profilers, heap dumps, common sources
+- "Design a thread-safe singleton" → enum singleton or double-checked locking with volatile
+- "Explain GC and when to tune it" → GC algorithm trade-offs, pause vs throughput
+- "Records vs regular classes?" → Immutable, boilerplate-free value objects
+- "Virtual Threads vs WebFlux?" → Virtual Threads for most I/O-bound; WebFlux for streaming/SSE

@@ -2,255 +2,217 @@
 
 > Essential networking knowledge for system design and backend development
 
-## 🎯 Why Networking Matters for Backend Engineers
-- **System Design interviews:** Load balancing, CDN, API design, microservices communication
-- **Performance optimization:** Understanding latency, throughput, caching strategies
-- **Troubleshooting:** Debug production issues, analyze bottlenecks
-- **Architecture decisions:** Choose protocols, design resilient systems
-
----
-
 # 1. Network Fundamentals
 
-## 1.1 Core Concepts
-**IP & Addressing:**
+## IP & Addressing
 - IPv4/IPv6, Private/Public IP ranges (10.x, 192.168.x, 172.16-31.x)
 - Subnetting, CIDR notation (/24, /16)
-- DNS resolution (A, AAAA, CNAME, MX records)
+- DNS resolution — record types: A (IPv4), AAAA (IPv6), CNAME (alias), MX (mail)
 - NAT/PAT for private network access
 
-**Protocol Stack:**
-- **TCP:** Reliable, ordered, handshake (3-way), flow control, congestion control
-- **UDP:** Fast, unreliable, stateless - good for real-time apps (gaming, video)
-- **HTTP/HTTPS:** Application layer, stateless, request-response
+## TCP vs UDP
+| | TCP | UDP |
+|---|---|---|
+| Reliability | Guaranteed (ACK, retransmit) | Best-effort |
+| Order | Ordered | No ordering |
+| Connection | 3-way handshake | Stateless |
+| Overhead | Higher | Lower |
+| Use when | HTTP, DB, file transfer | Real-time (video, gaming, DNS) |
 
-**Key insight for interviews:** Choose UDP for real-time, TCP for reliability
+## HTTP Versions
 
----
+| Version | Transport | Key Feature |
+|---|---|---|
+| HTTP/1.1 | TCP + TLS | Keep-alive, one request at a time per connection |
+| HTTP/2 | TCP + TLS | Multiplexing (multiple streams, 1 connection), binary, header compression, server push |
+| HTTP/3 | QUIC (UDP) | Stream-level reliability, 0-RTT resumption, connection migration |
 
-# 2. Application Layer Protocols & APIs
-
-## 2.1 HTTP/HTTPS Essentials
-**HTTP Basics:**
-- **Methods:** GET (idempotent), POST, PUT (idempotent), PATCH, DELETE (idempotent)
-- **Status codes:** 2xx (success), 4xx (client error), 5xx (server error)
-- **Headers:** Authorization, Content-Type, Cache-Control, CORS headers
-
-**HTTPS & Security:**
-- TLS handshake, certificates, SNI (Server Name Indication)
-- CORS: preflight requests, credentials handling
-- Security headers: HSTS, CSP, X-Frame-Options
-
-**Performance:**
-- HTTP/2: multiplexing, server push, binary protocol
-- Keep-alive connections, connection pooling
-
-## 2.2 API Design Patterns
-**REST fundamentals:**
-- **Stateless:** Each request contains all needed information
-- **Idempotency:** GET, PUT, DELETE safe to retry
-- **Resource-based URLs:** `/users/123` not `/getUser?id=123`
-- **Versioning:** URL path vs headers vs query params
-
-**Modern API patterns:**
-- **GraphQL:** Query language, single endpoint, client-specified data
-- **gRPC:** HTTP/2, Protocol Buffers, streaming, strong typing
-- **WebSocket:** Full-duplex, real-time communication, persistent connection
-
-**Interview relevance:** Choose HTTP for CRUD, WebSocket for real-time, gRPC for internal services
+**HTTP/3 / QUIC key advantages:**
+- Runs over UDP — built-in TLS 1.3, no TCP-level head-of-line blocking
+- **Connection migration:** IP thay đổi (wifi → 4G) → connection không bị drop (ID-based)
+- **0-RTT:** reconnect không cần full handshake
+- Dùng khi: mobile clients, high-latency networks, CDN (Cloudflare, Google đã support)
 
 ---
 
-# 3. Scalability & Performance Patterns
+# 2. HTTP Essentials
 
-## 3.1 Load Balancing & Proxy Patterns
-**Load Balancer Types:**
-- **L4 (Transport layer):** TCP/UDP level, faster, less features
-- **L7 (Application layer):** HTTP level, content-based routing, SSL termination
+## Methods & Idempotency
+| Method | Idempotent | Safe | Dùng cho |
+|--------|-----------|------|----------|
+| GET    | ✅        | ✅   | Read |
+| PUT    | ✅        | ❌   | Full replace |
+| DELETE | ✅        | ❌   | Delete |
+| POST   | ❌        | ❌   | Create |
+| PATCH  | ❌        | ❌   | Partial update |
 
-**Algorithms:**
-- **Round Robin:** Simple, even distribution
-- **Least Connections:** Better for long-lived connections
-- **Weighted:** Handle different server capacities
-- **Health Checks:** Remove failed servers from rotation
+## Status Codes (key ones)
+| Code | Meaning |
+|------|---------|
+| 200 OK | success |
+| 201 Created | resource created |
+| 204 No Content | success, no body |
+| 301/302 | Redirect |
+| 400 Bad Request | invalid input |
+| 401 Unauthorized | not authenticated |
+| 403 Forbidden | no permission |
+| 404 Not Found | resource không tồn tại |
+| 409 Conflict | duplicate/stale data |
+| 429 Too Many Requests | rate limited |
+| 500 Internal Server Error | server crash |
+| 503 Service Unavailable | overloaded/down |
 
-**Proxy patterns:**
-- **Reverse Proxy:** Server-side, SSL termination, caching, compression
-- **Forward Proxy:** Client-side, content filtering, anonymity
-- **API Gateway:** Authentication, rate limiting, request/response transformation
-
-## 3.2 Caching & Content Delivery
-**CDN (Content Delivery Network):**
-- **Edge caching:** Serve content from geographically closer servers
-- **Cache strategies:** TTL, cache invalidation, cache warming
-- **Use cases:** Static assets, API responses, database query results
-
-**Cache Patterns:**
-- **Cache-aside:** Application manages cache
-- **Write-through:** Write to cache and database simultaneously
-- **Write-behind:** Write to cache first, database later
-- **Cache levels:** Browser → CDN → Load balancer → Application → Database
-
-## 3.3 Performance Optimization
-**Latency reduction:**
-- **Connection reuse:** HTTP keep-alive, connection pooling
-- **Compression:** gzip, brotli for text content
-- **Protocol optimization:** HTTP/2 multiplexing, TLS session resumption
-
-**Scalability patterns:**
-- **Horizontal scaling:** Add more servers (stateless design required)
-- **Vertical scaling:** Bigger servers (easier but limited)
-- **Async processing:** Message queues, event-driven architecture
-- **Circuit breaker:** Fail fast, prevent cascading failures
-
-**Interview insight:** Always discuss caching strategy and failure handling in system design
+## TLS/HTTPS
+- TLS handshake: certificate verification → cipher negotiation → key exchange
+- TLS session resumption: giảm latency cho repeated connections
+- HSTS, cert rotation, SNI (Server Name Indication)
+- Security headers: HSTS, CSP, X-Frame-Options, X-Content-Type-Options
 
 ---
 
-# 4. Security & Authentication
+# 3. gRPC — Protocol Overview
 
-## 4.1 Network Security Fundamentals
-**Transport Security:**
-- **TLS/SSL:** Encryption in transit, certificate validation, SNI
-- **HTTPS everywhere:** Protect data, SEO benefits, browser requirements
-- **Certificate management:** Let's Encrypt, wildcard certs, rotation
+> Chi tiết REST vs gRPC vs GraphQL khi nào dùng → xem [API Design](../2-Design-And-Architecture/api-design.md)
 
-**Authentication vs Authorization:**
-- **Authentication:** Who are you? (login, JWT, API keys)
-- **Authorization:** What can you do? (roles, permissions, scopes)
+## Basics
+- Protocol: **HTTP/2** + **Protocol Buffers** (binary serialization)
+- Strongly-typed contracts (`.proto` file), code generation required
+- **3–10x smaller** payload vs JSON
 
-## 4.2 Common Security Patterns
-**Token-based Authentication:**
-- **JWT:** Self-contained, stateless, signature validation
-- **OAuth2:** Authorization framework, scopes, refresh tokens
-- **API Keys:** Simple but less secure, rate limiting, rotation
+## 4 Communication Modes
+| Mode | Description |
+|------|-------------|
+| Unary | 1 request → 1 response (giống REST) |
+| Server Streaming | 1 request → stream of responses |
+| Client Streaming | stream of requests → 1 response |
+| Bidirectional | stream ↔ stream simultaneously |
 
-**Web Security:**
-- **CORS:** Same-origin policy, preflight requests, credentials
-- **Security Headers:** HSTS, CSP, X-Frame-Options, X-XSS-Protection
-- **Common attacks:** XSS, CSRF, SQL injection, DDoS mitigation
+## gRPC vs REST
+| | REST/JSON | gRPC/Protobuf |
+|---|---|---|
+| Payload | Verbose (text) | Compact (binary) |
+| Schema | Optional (OpenAPI) | Required (Protobuf) |
+| Browser | Native | Cần grpc-web proxy |
+| Streaming | Workarounds | Built-in (4 modes) |
+| Debugging | Easy (readable) | Harder (binary) |
 
-**Interview insight:** Always discuss authentication flow and security headers in API design
+**Khi nào dùng gRPC:** Internal service-to-service, high throughput, low latency, streaming
+**Khi nào dùng REST:** Public APIs, browser clients, simplicity
 
----
-
-# 5. Modern Infrastructure & Cloud
-
-## 5.1 Container & Microservices Networking
-**Container Networking:**
-- **Docker networking:** Bridge, host, overlay networks
-- **Kubernetes networking:** Pods, Services, Ingress controllers
-- **Service mesh:** Istio, Linkerd - traffic management, observability, security
-
-**Microservices Communication:**
-- **Service Discovery:** DNS-based, registry-based (Consul, Eureka)
-- **Load balancing:** Client-side vs server-side
-- **Circuit breaker:** Prevent cascading failures, fallback strategies
-
-## 5.2 Cloud Networking Essentials
-**Virtual Private Cloud (VPC):**
-- **Subnets:** Public (internet access) vs private (internal only)
-- **Route tables:** Control traffic flow between subnets
-- **Security groups:** Instance-level firewall rules
-- **NAT Gateway:** Outbound internet access for private subnets
-
-**Load Balancers in Cloud:**
-- **Application Load Balancer (L7):** HTTP/HTTPS, host/path-based routing
-- **Network Load Balancer (L4):** TCP/UDP, ultra-high performance
-- **API Gateway:** Managed service, authentication, rate limiting, caching
-
-**Interview relevance:** Essential for system design questions involving scalable web applications
+**Protobuf compatibility:** thêm fields (new field numbers) OK — không xóa/đổi field numbers
 
 ---
 
-# 6. Observability & Troubleshooting
+# 4. Load Balancing & Proxy
 
-## 6.1 Network Debugging Tools
-**Command-line essentials:**
-- **ping:** Basic connectivity, latency measurement
-- **traceroute:** Network path analysis, identify bottlenecks
-- **nslookup/dig:** DNS resolution debugging
-- **curl/wget:** HTTP testing, header inspection
-- **netstat/ss:** Connection monitoring, port usage
+## Load Balancer Types
+- **L4 (Transport):** TCP/UDP level — fast, less features
+- **L7 (Application):** HTTP level — content-based routing, SSL termination, host/path routing
 
-**Advanced debugging:**
-- **tcpdump/Wireshark:** Packet capture and analysis
-- **Browser DevTools:** Network tab, performance analysis
-- **Load testing:** ab, JMeter, wrk for performance testing
+## Algorithms
+- **Round Robin:** simple, even distribution
+- **Least Connections:** better for long-lived connections
+- **Weighted:** handle different server capacities
+- **IP Hash:** sticky sessions (same client → same server)
 
-## 6.2 Production Monitoring
-**Key metrics:**
-- **Latency:** P50, P95, P99 response times
-- **Throughput:** Requests per second, bandwidth usage
-- **Error rates:** 4xx, 5xx status codes
-- **Connection metrics:** Pool usage, timeout rates
-
-**Observability:**
-- **Logging:** Structured logs, correlation IDs, log aggregation
-- **Metrics:** Time-series data, dashboards (Grafana)
-- **Tracing:** Distributed tracing, request flow analysis
-
-**Interview tip:** Always mention monitoring and alerting when designing systems
+## Proxy Patterns
+- **Reverse Proxy:** server-side, SSL termination, caching, compression (Nginx, HAProxy)
+- **API Gateway:** auth, rate limiting, request transformation (Kong, AWS API GW)
+- **Service Mesh:** Istio, Linkerd — traffic management, mTLS, observability between services
 
 ---
 
-# 7. Classic Interview Case Study
+# 5. CDN & Caching
 
-## "What happens when you type `www.google.com`?"
-
-**Complete flow with senior-level insights:**
-
-1. **DNS Resolution**
-   - Browser cache → OS cache → Router cache → ISP DNS → Root servers
-   - **Insight:** DNS caching reduces latency, TTL controls cache duration
-
-2. **TCP Connection**
-   - 3-way handshake: SYN → SYN-ACK → ACK
-   - **Insight:** Connection pooling reuses connections, reduces handshake overhead
-
-3. **TLS Handshake**
-   - Certificate verification, cipher negotiation, key exchange
-   - **Insight:** TLS session resumption speeds up subsequent connections
-
-4. **HTTP Request**
-   - Headers, cookies, content negotiation
-   - **Insight:** HTTP/2 multiplexing allows multiple requests per connection
-
-5. **Load Balancing & CDN**
-   - Edge servers, geographic routing, cache hits/misses
-   - **Insight:** CDN reduces server load and improves global performance
-
-6. **Server Processing & Response**
-   - Application logic, database queries, response generation
-   - **Insight:** Caching, database optimization, async processing improve performance
-
-**Senior discussion points:**
-- Security considerations at each step
-- Performance optimizations
-- Failure scenarios and resilience
-- Monitoring and observability
+- **CDN:** edge servers serve content từ gần user nhất — reduces latency, server load
+- **Cache-Control headers:** `max-age`, `no-cache`, `no-store`, `s-maxage`
+- **Cache invalidation:** TTL-based, event-triggered, cache busting (versioned URLs)
+- **Cache levels:** Browser → CDN → Load Balancer → App → Database
 
 ---
 
-# 📚 Essential Resources
+# 6. Cloud Networking Essentials
 
-## Must-Read Materials
-- [Computer Networking: A Top-Down Approach](pdf/Computer-Networking-A-Top-Down-Approach-8th-Edition.pdf) - Comprehensive networking fundamentals
+## VPC Concepts
+- **Subnets:** Public (internet access) vs Private (internal only)
+- **Route tables:** control traffic flow between subnets
+- **Security groups:** instance-level stateful firewall rules
+- **NAT Gateway:** outbound internet for private subnets
+- **VPC Peering / Transit Gateway:** connect multiple VPCs
 
-## Online Resources
-- [High Performance Browser Networking](https://hpbn.co/) - Web performance optimization
-- [HTTP/2 Explained](https://http2-explained.haxx.se/) - Modern HTTP protocol
-- [AWS Well-Architected Framework](https://aws.amazon.com/architecture/well-architected/) - Cloud networking best practices
+## Microservices Networking
+- **Service Discovery:** DNS-based (K8s services), registry-based (Consul, Eureka)
+- **Circuit breaker:** prevent cascading failures (Resilience4j, Envoy)
 
-## Quick Reference
+---
+
+# 7. WebSockets & Real-Time Communication
+
+## WebSocket
+- **Full-duplex** persistent connection — cả client và server có thể gửi bất kỳ lúc nào
+- Handshake: HTTP Upgrade request → server responds 101 Switching Protocols → WS connection
+- Protocol: `ws://` (plain) hoặc `wss://` (over TLS)
+- **Use cases:** chat, live notifications, real-time dashboards, collaborative editing, live scores
+
+## WebSocket vs HTTP Polling vs SSE
+
+| | HTTP Polling | Long Polling | SSE | WebSocket |
+|---|---|---|---|---|
+| Direction | Client → Server | Client → Server | Server → Client only | Bidirectional |
+| Connection | New per request | Held open until event | Persistent (one-way) | Persistent (two-way) |
+| Overhead | High (repeated requests) | Medium | Low | Low |
+| Browser support | ✅ | ✅ | ✅ | ✅ |
+| Use when | Simple, infrequent updates | Moderate frequency | Server push only | Bidirectional real-time |
+
+## Server-Sent Events (SSE)
+- **One-way:** Server → Client only (không cần bidirectional)
+- Native browser `EventSource` API — auto-reconnect built-in
+- **Use cases:** live feed, progress updates, notifications, log streaming
+- Text-based (not binary) — simpler than WebSocket
+- Works over HTTP/2 (multiplexed) — scales better than HTTP/1.1 SSE
+
+## Spring Boot Support
+- **WebSocket:** `spring-boot-starter-websocket` + SockJS + STOMP (messaging protocol over WS)
+- **SSE:** `SseEmitter` hoặc reactive `Flux<ServerSentEvent>` với WebFlux
+
+## Scaling Real-Time Connections
+- WebSocket connections are stateful → sticky sessions hoặc pub/sub backend
+- **Pattern:** WS clients connect to any server → servers communicate via Redis Pub/Sub or Kafka → fan out to connected clients
+- Load balancer: Nginx `proxy_http_version 1.1` + `Upgrade` header passthrough for WS
+
+---
+
+# 8. Classic Interview: "What happens when you type google.com?"
+
+1. **DNS Resolution** → Browser cache → OS → ISP → Root → Authoritative
+2. **TCP 3-way handshake** → SYN → SYN-ACK → ACK
+3. **TLS handshake** → cert verify → key exchange → session established
+4. **HTTP Request** → headers, cookies, content negotiation
+5. **Load Balancer / CDN** → edge cache hit? → origin server
+6. **Server processing** → app logic → DB → response
+
+**Discussion points:** connection pooling, HTTP/2 multiplexing, CDN cache hit rates, TLS session resumption
+
+---
+
+# 9. Debugging Tools (reference)
+- `ping` — basic connectivity, latency
+- `traceroute` / `tracert` — network path, identify bottlenecks
+- `nslookup` / `dig` — DNS debugging
+- `curl -v` — HTTP testing with headers
+- `netstat` / `ss` — connection monitoring, port usage
+- Browser DevTools Network tab — HTTP waterfall analysis
+
+---
+
+# Quick Reference
 **For System Design Interviews:**
-- Choose protocols based on requirements (HTTP vs WebSocket vs gRPC)
-- Always discuss caching strategy and CDN usage
-- Consider load balancing and failure scenarios
-- Mention monitoring and observability
+- Choose protocol based on requirements (HTTP vs WebSocket vs gRPC)
+- Always discuss caching strategy and CDN
+- Consider load balancing, failure scenarios, circuit breakers
+- Mention Observability → xem [observability.md](../2-Design-And-Architecture/observability.md)
 
 **For Technical Deep-dives:**
-- Know TLS handshake process and performance implications
-- Understand HTTP/2 benefits and when to use it
-- Be familiar with cloud networking concepts (VPC, security groups)
-- Explain debugging approach for network issues
+- HTTP/2 multiplexing vs HTTP/3 QUIC
+- TLS handshake và session resumption
+- Cloud VPC, security groups, NAT

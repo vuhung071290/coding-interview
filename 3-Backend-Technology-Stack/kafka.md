@@ -2,18 +2,6 @@
 
 > Distributed event streaming platform for scalable, real-time data processing
 
-## 🎯 Why Kafka Matters for Backend Engineers
-- **Event-driven architectures:** Decouple microservices with reliable messaging
-- **System design interviews:** Essential component for scalable, real-time systems
-- **High-throughput systems:** Handle millions of messages per second
-- **Data integration:** Connect databases, APIs, analytics systems, ML pipelines
-- **Fault tolerance:** Built-in replication, durability, high availability
-- **Real-world usage:** Used by 80% of Fortune 100 companies (LinkedIn, Netflix, Uber, Airbnb)
-
-**Focus:** Production-ready Kafka knowledge for backend systems and system design interviews.
-
----
-
 ## 1. Kafka Overview & Core Concepts
 - Distributed event streaming platform.
 - Components:

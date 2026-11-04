@@ -48,70 +48,6 @@
 
 ---
 
-## 📚 Study Plan (6-8 Weeks)
-
-### Week 1-2: Foundations
-**DSA Refresh:**
-- Review [DSA notes](1-Computer-Science/dsa.md)
-- Practice 10-15 problems to refresh fundamentals
-- Focus: Arrays, strings, hashmaps, basic trees
-
-**Computer Science Fundamentals:**
-- [Computer Science basics](1-Computer-Science/computer-science.md) - OS, memory management, process scheduling
-- [Networking](1-Computer-Science/networking.md) - TCP/UDP, HTTP/HTTPS, load balancing, DNS
-- [Concurrent Programming](1-Computer-Science/concurrent.md) - Threading, synchronization, async programming
-- [Database fundamentals](1-Computer-Science/databases.md) - ACID, indexing, query optimization
-
-**System Design:**
-- Read [System Design Interview Vol 1](2-Design-And-Architecture/pdf/System-Design-Interview.pdf) chapters 1-5
-- Study [Design & Architecture](2-Design-And-Architecture/design-and-architecture.md) Phase 1-4
-
-### Week 3-4: Core Practice
-**Coding:**
-- [Blind 75](https://www.techinterviewhandbook.org/best-practice-questions/) (essential problems - prioritize these)
-- Select problems from [NeetCode 150](https://neetcode.io/practice) based on weak areas
-- Practice explaining solutions clearly, time complexity analysis
-
-**System Design:**
-- Design 3-4 systems end-to-end (quality over quantity)
-- Focus on: URL shortener, Chat app, Social media feed, Video streaming
-- **Start light mock interviews:** Peer practice or self-recording
-
-### Week 5-6: Technology Deep-Dive & Advanced Practice
-**Backend Stack Deep-Dive:**
-- [Java](3-Backend-Technology-Stack/java.md) advanced topics: JVM, garbage collection, performance
-- [Spring](3-Backend-Technology-Stack/spring.md) ecosystem: Boot, Security, Data, Cloud
-- [Redis](3-Backend-Technology-Stack/redis.md), [Kafka](3-Backend-Technology-Stack/kafka.md) for distributed systems
-- Prepare detailed stories of complex problems you solved
-
-**Intensive Mock Interviews:**
-- 2-3 full coding interview sessions per week
-- 1-2 system design sessions per week
-- Record yourself, analyze weak points
-
-### Week 7-8: Final Polish & Interview Readiness
-**Company-Specific Research:**
-- Study target companies' engineering blogs, tech stacks, recent architecture decisions
-- Research interviewer backgrounds on LinkedIn (if known)
-- Understand company's technical challenges and growth areas
-
-**Behavioral Interview Preparation:**
-- Polish STAR stories for leadership, conflict resolution, technical challenges
-- Practice articulating your impact with metrics and business outcomes
-- Prepare thoughtful questions about team culture, technical challenges, growth
-
-**Last-Mile Technical Prep:**
-- **Final mock interviews:** Full behavioral + technical rounds with feedback
-- Review and refine your system design templates and processes
-- Practice explaining your most complex project in 5-10 minutes
-
-**Interview Day Readiness:**
-- Review salary negotiation strategies and market research
-- Prepare your interview day setup (tech, environment, backup plans)
-- Final review of key concepts and your prepared stories
-
----
-
 ## 🧠 Senior-Level Interview Excellence
 
 ### 🎯 System Design Mastery
@@ -212,3 +148,110 @@
 - **Engineering blogs:** [High Scalability](http://highscalability.com/), company engineering blogs
 - **Architecture talks:** YouTube channels, conference presentations from target companies
 - **Recent developments:** Latest tech stack changes, new product launches, technical challenges
+
+---
+
+# Behavioral Interview — STAR Framework
+
+## STAR Structure
+- **Situation:** Bối cảnh, khi nào xảy ra
+- **Task:** Nhiệm vụ của bạn, trách nhiệm cụ thể
+- **Action:** Những gì BẠN đã làm (không phải team, dùng "I")
+- **Result:** Kết quả đo lường được, impact thực tế
+
+## Essential STAR Stories (chuẩn bị ít nhất 1 cho mỗi chủ đề)
+
+### Technical Challenge
+**S:** Payment service có latency spike đột ngột lên P99 = 8s trong production
+**T:** Tôi phụ trách investigate và fix trong 24h (SLA với merchant)
+**A:**
+- Query profiling → phát hiện N+1 query trong order history endpoint
+- Thêm batch loading + DB index → query time giảm từ 400ms → 15ms
+- Add Redis cache cho repeated queries (TTL 5 phút)
+- Deploy với canary (5% traffic) → monitor 30 phút → roll out 100%
+
+**R:** P99 latency giảm từ 8s → 180ms, 0 customer complaints, giải pháp applied cho 3 similar endpoints khác
+
+### Conflict / Disagreement
+**S:** Code review: tôi và senior dev bất đồng về caching strategy
+**T:** Tôi propose Redis caching, họ argue không cần thiết
+**A:**
+- Tôi prepare benchmark data: load test results showing cache benefit
+- Đề xuất A/B test: 1 tuần với/không có cache
+- Trình bày trade-offs cụ thể (complexity vs performance gain)
+
+**R:** Team đồng ý A/B test → cache giảm DB load 60% → adopted cho toàn bộ service
+
+### Leadership / Mentoring
+**S:** Junior developer gặp khó khăn với Kafka consumer implementation
+**T:** Tôi phụ trách onboarding và technical growth cho team member mới
+**A:**
+- Pair programming 2 buổi/tuần trong 1 tháng
+- Tạo internal wiki với Kafka patterns và gotchas
+- Code review với explanation, không chỉ correction
+
+**R:** Junior dev tự implement full Kafka consumer sau 6 tuần. Wiki được team dùng như reference, giảm onboarding time 30%
+
+### Failure / What You Learned
+**S:** Tôi deploy feature không test kỹ → gây outage 15 phút
+**T:** Feature owner + on-call engineer
+**A:**
+- Immediate rollback (5 phút detect + rollback)
+- Hotfix với proper testing
+- Post-mortem: root cause là missing integration test
+- Tôi propose và implement: mandatory integration test cho payment flows
+
+**R:** Zero similar incidents trong 12 tháng tiếp theo. Lesson: speed không đáng đánh đổi với reliability cho critical paths
+
+## Common Behavioral Questions
+
+### "Tell me about yourself"
+Structure:
+1. Current role + main responsibility (2 sentences)
+2. Key achievement / impact (1–2 sentences)
+3. Why you're excited about THIS role (1–2 sentences)
+
+Example: "I'm a Senior Backend Engineer at [Company], leading the payments team where I'm responsible for processing X million transactions/month. Recently I led the migration from monolith to microservices, reducing deployment time from 2 hours to 15 minutes. I'm excited about this role because [specific reason about company/tech]."
+
+### "Why do you want to leave?"
+Focus on positive (pull factors, không negative về công ty cũ):
+- "Looking for more ownership / technical challenges"
+- "Excited about [company]'s scale and technical problems"
+- "Want to work on [specific technology/domain]"
+
+Avoid: "My boss is bad", "Company is not stable"
+
+### "Where do you see yourself in 5 years?"
+Align with the role:
+- Technical track: "Staff/Principal Engineer, deeper system design expertise"
+- Management track: "Engineering Manager, build and grow high-performance teams"
+- Add: "I see this role as a great step toward that because [reason]"
+
+---
+
+# Vietnam/SEA Market Interview Specifics
+
+### Common Tech Stack Questions for Vietnam Market
+- Kafka consumer groups, offset management
+- Redis clustering, Sentinel vs Cluster
+- Kubernetes deployment trên AWS EKS
+- Database partitioning / sharding cho Vietnamese scale
+- Payment integration (VNPay, MoMo, Zalopay)
+
+## Interview Formats in Vietnam
+
+### Technical Screen (45-60 phút)
+- LeetCode Medium (data structures, algorithms)
+- System design basics
+- Java/Spring knowledge questions
+
+### Technical Interview (90-120 phút)
+- LeetCode Medium-Hard hoặc live coding
+- System design (design a payment system, ride-matching, URL shortener)
+- Deep-dive past experience
+
+### Culture/Fit Interview
+- Behavioral questions
+- Team dynamics, working style
+- Vietnamese companies thường focus: ownership, learning mindset, stability
+
