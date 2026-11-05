@@ -2,9 +2,9 @@
 
 > Search engine và analytics platform — khi database full-text search không đủ
 
-# 1. Core Concepts
+## 1. Core Concepts
 
-## Index, Document, Shard
+### Index, Document, Shard
 - **Index:** tương đương "table" trong SQL — collection of documents
 - **Document:** JSON object — đơn vị lưu trữ (tương đương "row")
 - **Shard:** partition của index — đơn vị parallelism và distribution
@@ -15,7 +15,7 @@
 
 Ví dụ: Index "products" với 5 primary shards × 1 replica = 10 shards tổng. Primary và replica của cùng shard phải trên khác node.
 
-## Inverted Index (tại sao ES search nhanh)
+### Inverted Index (tại sao ES search nhanh)
 Thay vì scan từng document, ES xây dựng inverted index:
 - "brown" → Doc 1, Doc 2, Doc 3
 - "fox" → Doc 1, Doc 3
@@ -27,9 +27,9 @@ Khi query "brown fox" → tìm trong inverted index → O(1) lookup thay vì ful
 
 ---
 
-# 2. Mapping & Analysis
+## 2. Mapping & Analysis
 
-## Field Types
+### Field Types
 | Type | Description | Use When |
 |------|-------------|----------|
 | text | Analyzed (tokenized, lowercased) | Full-text search |
@@ -39,12 +39,12 @@ Khi query "brown fox" → tìm trong inverted index → O(1) lookup thay vì ful
 | boolean | true/false | Filter |
 | nested | Array of objects with own fields | Nested queries |
 
-## text vs keyword — Key Distinction
+### text vs keyword — Key Distinction
 - **text:** `"Quick Brown Fox"` → indexed as `["quick", "brown", "fox"]` → fuzzy, partial match works
 - **keyword:** `"Quick Brown Fox"` → indexed as-is → only exact match, good for sorting/facets
 - Common pattern: dual field — `name` (text) + `name.keyword` (keyword) for both use cases
 
-## Analyzers
+### Analyzers
 - **Standard:** default — tokenize on whitespace/punctuation, lowercase
 - **Vietnamese:** cần ICU plugin hoặc custom analyzer
 - Custom analyzer: define tokenizer + token filters (lowercase, stop words, stemming)
@@ -52,23 +52,23 @@ Khi query "brown fox" → tìm trong inverted index → O(1) lookup thay vì ful
 
 ---
 
-# 3. Query DSL
+## 3. Query DSL
 
-## Full-Text Queries (analyzed)
+### Full-Text Queries (analyzed)
 - **match:** main full-text query — tokenizes input, finds matching terms (OR logic by default)
   - `operator: "AND"` — all terms must match
 - **match_phrase:** exact phrase in order — "quick brown" won't match "brown quick"
 - **multi_match:** search across multiple fields; field boosting with `^` (e.g., `name^3`)
   - Types: `best_fields`, `most_fields`, `cross_fields`, `phrase`
 
-## Term-Level Queries (not analyzed — exact match)
+### Term-Level Queries (not analyzed — exact match)
 - **term:** exact value match — use on keyword fields
 - **terms:** multiple values (equivalent to SQL IN)
 - **range:** numeric/date range — `gte`, `lte`, `gt`, `lt`
 - **exists:** check if field has a value
 - **ids:** find by document IDs
 
-## Boolean Query (combine queries)
+### Boolean Query (combine queries)
 - **must:** AND logic — contributes to relevance score
 - **filter:** AND logic — NO score contribution, cacheable (use for filters!)
 - **should:** OR logic — boosts score if matches
@@ -76,80 +76,80 @@ Khi query "brown fox" → tìm trong inverted index → O(1) lookup thay vì ful
 
 **Key insight:** Use `filter` context for structured filters (price range, category, in-stock), `must` for text relevance. Filter context is faster (cached).
 
-## Fuzzy Search
+### Fuzzy Search
 - `fuzziness: "AUTO"` — 0 for 1-2 chars, 1 for 3-5 chars, 2 for 6+
 - Handles typos: "laptpo" matches "laptop"
 - Higher fuzziness = more matches but lower precision
 
 ---
 
-# 4. Aggregations
+## 4. Aggregations
 
-## Bucket Aggregations (nhóm documents)
+### Bucket Aggregations (nhóm documents)
 - **terms:** group by field value — equivalent to GROUP BY
 - **range:** bucket documents into price/date ranges
 - **date_histogram:** group by time interval (day, month)
 - **filter:** single-bucket for a filter condition
 
-## Metric Aggregations (tính toán trên buckets)
+### Metric Aggregations (tính toán trên buckets)
 - **avg, min, max, sum** — standard stats
 - **stats** — min, max, avg, sum, count in one
 - **percentiles** — P50, P95, P99 — good for latency analysis
 - **cardinality** — approximate unique count (HyperLogLog)
 
-## Nested Aggregations (faceted search)
+### Nested Aggregations (faceted search)
 Bucket aggs can have sub-aggregations: "by category" → "avg price per category"
 This powers e-commerce faceted search (category counts, price ranges, brand filters)
 
 ---
 
-# 5. Relevance Scoring
+## 5. Relevance Scoring
 
-## TF-IDF (traditional)
+### TF-IDF (traditional)
 - **TF (Term Frequency):** term xuất hiện nhiều trong document → score cao
 - **IDF (Inverse Document Frequency):** term hiếm trong toàn index → score cao
 - "the" xuất hiện mọi nơi → low IDF; "elasticsearch" hiếm → high IDF
 
-## BM25 (default từ ES 5.0+)
+### BM25 (default từ ES 5.0+)
 - Improvement over TF-IDF
 - Diminishing returns for TF (stops rewarding very high frequency)
 - Field length normalization: shorter field + same terms = higher score
 - Tunable: `k1` (TF saturation), `b` (length normalization)
 
-## Boosting Strategies
+### Boosting Strategies
 - **Field boost in query:** `name^3` — name field 3x more important than description
 - **function_score:** custom scoring with functions (recency, popularity, featured flag)
 - **Script score:** arbitrary Painless script for complex scoring logic
 
 ---
 
-# 6. Performance & Operations
+## 6. Performance & Operations
 
-## Index Design
+### Index Design
 - **Shard sizing:** 20–50GB per shard (rule of thumb)
 - Disable fields not needed: `"enabled": false`
 - `"index": false` for fields only needed for display, not search
 - **Avoid** `dynamic: true` on untrusted data → mapping explosion
 
-## Search Performance
+### Search Performance
 - **Filter first:** filter context cached → put structure filters in `filter`, not `must`
 - **search_after pagination:** instead of offset-based (deep pagination slow)
 - **Source filtering:** `_source: ["name", "price"]` — don't return full document if unneeded
 - **Routing:** custom routing key sends related docs to same shard → fewer shard requests
 
-## Write Performance
+### Write Performance
 - **Bulk API:** batch multiple writes — single HTTP round-trip
 - **refresh_interval:** increase to `30s` or `-1` during bulk indexing
 - **Replicas:** temporarily set to `0` during initial bulk load, restore after
 
-## Common Operational Issues
+### Common Operational Issues
 - **Split brain:** use ≥ 3 master-eligible nodes; `minimum_master_nodes = n/2 + 1`
 - **Hot shard:** uneven traffic → custom routing or alias rollover strategy
 - **Mapping explosion:** too many dynamic fields → `dynamic: strict`
 
 ---
 
-# 7. Elasticsearch vs Database Full-Text Search
+## 7. Elasticsearch vs Database Full-Text Search
 
 | | Elasticsearch | PostgreSQL FTS |
 |---|---|---|
@@ -164,7 +164,7 @@ This powers e-commerce faceted search (category counts, price ranges, brand filt
 
 ---
 
-# 8. Data Sync Patterns
+## 8. Data Sync Patterns
 
 **Keeping ES in sync with primary DB:**
 - **Dual-write:** App writes to DB then ES — risk of inconsistency on failure
@@ -174,9 +174,9 @@ This powers e-commerce faceted search (category counts, price ranges, brand filt
 
 ---
 
-# 9. Interview Topics
+## 9. Interview Topics
 
-## Câu hỏi hay gặp
+### Câu hỏi hay gặp
 - "Elasticsearch hoạt động như thế nào?" → Inverted index, sharding, BM25 relevance scoring
 - "Làm sao implement search với typo tolerance?" → `fuzziness: AUTO`
 - "text vs keyword field?" → Analyzed vs not analyzed; dual field pattern
@@ -186,7 +186,7 @@ This powers e-commerce faceted search (category counts, price ranges, brand filt
 - "Làm sao implement faceted search?" → Bucket aggregations (terms, range) + sub-aggregations
 - "Deep pagination problem?" → `search_after` instead of `from+size` for deep pages
 
-## System Design Applications
+### System Design Applications
 - **E-commerce search:** product search với facets, relevance, category filters
 - **ELK Stack:** centralized logging (Logstash/Fluentd → Elasticsearch → Kibana)
 - **Autocomplete:** `prefix` query hoặc `completion` suggester

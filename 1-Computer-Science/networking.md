@@ -2,15 +2,15 @@
 
 > Essential networking knowledge for system design and backend development
 
-# 1. Network Fundamentals
+## 1. Network Fundamentals
 
-## IP & Addressing
+### IP & Addressing
 - IPv4/IPv6, Private/Public IP ranges (10.x, 192.168.x, 172.16-31.x)
 - Subnetting, CIDR notation (/24, /16)
 - DNS resolution — record types: A (IPv4), AAAA (IPv6), CNAME (alias), MX (mail)
 - NAT/PAT for private network access
 
-## TCP vs UDP
+### TCP vs UDP
 | | TCP | UDP |
 |---|---|---|
 | Reliability | Guaranteed (ACK, retransmit) | Best-effort |
@@ -19,7 +19,7 @@
 | Overhead | Higher | Lower |
 | Use when | HTTP, DB, file transfer | Real-time (video, gaming, DNS) |
 
-## HTTP Versions
+### HTTP Versions
 
 | Version | Transport | Key Feature |
 |---|---|---|
@@ -35,34 +35,11 @@
 
 ---
 
-# 2. HTTP Essentials
+## 2. HTTP Essentials
 
-## Methods & Idempotency
-| Method | Idempotent | Safe | Dùng cho |
-|--------|-----------|------|----------|
-| GET    | ✅        | ✅   | Read |
-| PUT    | ✅        | ❌   | Full replace |
-| DELETE | ✅        | ❌   | Delete |
-| POST   | ❌        | ❌   | Create |
-| PATCH  | ❌        | ❌   | Partial update |
+> **Methods, idempotency, status codes, versioning, pagination:** chi tiết đầy đủ → xem [API Design](../2-Design-And-Architecture/api-design.md#1-rest-api-design) — canonical source cho REST design
 
-## Status Codes (key ones)
-| Code | Meaning |
-|------|---------|
-| 200 OK | success |
-| 201 Created | resource created |
-| 204 No Content | success, no body |
-| 301/302 | Redirect |
-| 400 Bad Request | invalid input |
-| 401 Unauthorized | not authenticated |
-| 403 Forbidden | no permission |
-| 404 Not Found | resource không tồn tại |
-| 409 Conflict | duplicate/stale data |
-| 429 Too Many Requests | rate limited |
-| 500 Internal Server Error | server crash |
-| 503 Service Unavailable | overloaded/down |
-
-## TLS/HTTPS
+### TLS/HTTPS
 - TLS handshake: certificate verification → cipher negotiation → key exchange
 - TLS session resumption: giảm latency cho repeated connections
 - HSTS, cert rotation, SNI (Server Name Indication)
@@ -70,16 +47,16 @@
 
 ---
 
-# 3. gRPC — Protocol Overview
+## 3. gRPC — Protocol Overview
 
 > Chi tiết REST vs gRPC vs GraphQL khi nào dùng → xem [API Design](../2-Design-And-Architecture/api-design.md)
 
-## Basics
+### Basics
 - Protocol: **HTTP/2** + **Protocol Buffers** (binary serialization)
 - Strongly-typed contracts (`.proto` file), code generation required
 - **3–10x smaller** payload vs JSON
 
-## 4 Communication Modes
+### 4 Communication Modes
 | Mode | Description |
 |------|-------------|
 | Unary | 1 request → 1 response (giống REST) |
@@ -87,7 +64,7 @@
 | Client Streaming | stream of requests → 1 response |
 | Bidirectional | stream ↔ stream simultaneously |
 
-## gRPC vs REST
+### gRPC vs REST
 | | REST/JSON | gRPC/Protobuf |
 |---|---|---|
 | Payload | Verbose (text) | Compact (binary) |
@@ -103,26 +80,26 @@
 
 ---
 
-# 4. Load Balancing & Proxy
+## 4. Load Balancing & Proxy
 
-## Load Balancer Types
+### Load Balancer Types
 - **L4 (Transport):** TCP/UDP level — fast, less features
 - **L7 (Application):** HTTP level — content-based routing, SSL termination, host/path routing
 
-## Algorithms
+### Algorithms
 - **Round Robin:** simple, even distribution
 - **Least Connections:** better for long-lived connections
 - **Weighted:** handle different server capacities
 - **IP Hash:** sticky sessions (same client → same server)
 
-## Proxy Patterns
+### Proxy Patterns
 - **Reverse Proxy:** server-side, SSL termination, caching, compression (Nginx, HAProxy)
 - **API Gateway:** auth, rate limiting, request transformation (Kong, AWS API GW)
 - **Service Mesh:** Istio, Linkerd — traffic management, mTLS, observability between services
 
 ---
 
-# 5. CDN & Caching
+## 5. CDN & Caching
 
 - **CDN:** edge servers serve content từ gần user nhất — reduces latency, server load
 - **Cache-Control headers:** `max-age`, `no-cache`, `no-store`, `s-maxage`
@@ -131,30 +108,30 @@
 
 ---
 
-# 6. Cloud Networking Essentials
+## 6. Cloud Networking Essentials
 
-## VPC Concepts
+### VPC Concepts
 - **Subnets:** Public (internet access) vs Private (internal only)
 - **Route tables:** control traffic flow between subnets
 - **Security groups:** instance-level stateful firewall rules
 - **NAT Gateway:** outbound internet for private subnets
 - **VPC Peering / Transit Gateway:** connect multiple VPCs
 
-## Microservices Networking
+### Microservices Networking
 - **Service Discovery:** DNS-based (K8s services), registry-based (Consul, Eureka)
 - **Circuit breaker:** prevent cascading failures (Resilience4j, Envoy)
 
 ---
 
-# 7. WebSockets & Real-Time Communication
+## 7. WebSockets & Real-Time Communication
 
-## WebSocket
+### WebSocket
 - **Full-duplex** persistent connection — cả client và server có thể gửi bất kỳ lúc nào
 - Handshake: HTTP Upgrade request → server responds 101 Switching Protocols → WS connection
 - Protocol: `ws://` (plain) hoặc `wss://` (over TLS)
 - **Use cases:** chat, live notifications, real-time dashboards, collaborative editing, live scores
 
-## WebSocket vs HTTP Polling vs SSE
+### WebSocket vs HTTP Polling vs SSE
 
 | | HTTP Polling | Long Polling | SSE | WebSocket |
 |---|---|---|---|---|
@@ -164,25 +141,25 @@
 | Browser support | ✅ | ✅ | ✅ | ✅ |
 | Use when | Simple, infrequent updates | Moderate frequency | Server push only | Bidirectional real-time |
 
-## Server-Sent Events (SSE)
+### Server-Sent Events (SSE)
 - **One-way:** Server → Client only (không cần bidirectional)
 - Native browser `EventSource` API — auto-reconnect built-in
 - **Use cases:** live feed, progress updates, notifications, log streaming
 - Text-based (not binary) — simpler than WebSocket
 - Works over HTTP/2 (multiplexed) — scales better than HTTP/1.1 SSE
 
-## Spring Boot Support
+### Spring Boot Support
 - **WebSocket:** `spring-boot-starter-websocket` + SockJS + STOMP (messaging protocol over WS)
 - **SSE:** `SseEmitter` hoặc reactive `Flux<ServerSentEvent>` với WebFlux
 
-## Scaling Real-Time Connections
+### Scaling Real-Time Connections
 - WebSocket connections are stateful → sticky sessions hoặc pub/sub backend
 - **Pattern:** WS clients connect to any server → servers communicate via Redis Pub/Sub or Kafka → fan out to connected clients
 - Load balancer: Nginx `proxy_http_version 1.1` + `Upgrade` header passthrough for WS
 
 ---
 
-# 8. Classic Interview: "What happens when you type google.com?"
+## 8. Classic Interview: "What happens when you type google.com?"
 
 1. **DNS Resolution** → Browser cache → OS → ISP → Root → Authoritative
 2. **TCP 3-way handshake** → SYN → SYN-ACK → ACK
@@ -195,7 +172,7 @@
 
 ---
 
-# 9. Debugging Tools (reference)
+## 9. Debugging Tools (reference)
 - `ping` — basic connectivity, latency
 - `traceroute` / `tracert` — network path, identify bottlenecks
 - `nslookup` / `dig` — DNS debugging
@@ -205,7 +182,7 @@
 
 ---
 
-# Quick Reference
+## Quick Reference
 **For System Design Interviews:**
 - Choose protocol based on requirements (HTTP vs WebSocket vs gRPC)
 - Always discuss caching strategy and CDN

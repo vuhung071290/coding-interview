@@ -90,6 +90,11 @@
 **Deployment patterns:** Blue-Green, Canary, Rolling deployments
 **Infrastructure:** IaC, GitOps, container orchestration basics
 **Reliability:** SLA/SLO/SLI, error budgets, chaos engineering concepts
+**Disaster Recovery & Backup:**
+- **Backup strategy:** full snapshot + incremental; PITR (point-in-time recovery) cho DB quan trọng
+- **DR tiers:** Backup/restore → Pilot light → Warm standby → Multi-site / Active-active
+- **RTO/RPO:** DR plan phải define rõ RTO/RPO; multi-region thường active-passive (backup/restore, pilot light) cho senior-level systems
+- **Chaos engineering:** game days, failover drills để verify DR readiness
 
 ---
 
@@ -178,16 +183,16 @@
 
 ---
 
-# Saga Pattern & Outbox Pattern — Distributed Transactions
+## Saga Pattern & Outbox Pattern — Distributed Transactions
 
-## Vấn đề
+### Vấn đề
 - Microservices: mỗi service có DB riêng → không thể dùng ACID transactions across services
 - **Ví dụ:** Order Service tạo order → Payment Service charge → Inventory Service reserve stock
 - Nếu Inventory fail sau khi Payment succeed → inconsistent state!
 
-## Saga Pattern
+### Saga Pattern
 
-### Choreography Saga (Event-driven)
+#### Choreography Saga (Event-driven)
 
 Order Service emits OrderCreated event
 → Payment Service listens, processes payment, emits PaymentProcessed
@@ -199,7 +204,7 @@ Order Service emits OrderCreated event
 **Pros:** Loose coupling, no central coordinator, services independent
 **Cons:** Hard to debug (logic distributed across services), risk of cyclic event dependencies
 
-### Orchestration Saga (Command-driven)
+#### Orchestration Saga (Command-driven)
 
 Central Saga Orchestrator sends commands:
 1. CreatePayment → Payment Service → success/fail
@@ -213,7 +218,7 @@ Central Saga Orchestrator sends commands:
 **Pros:** Centralized logic, easy to trace, explicit failure handling
 **Cons:** Orchestrator is potential bottleneck, services coupled to orchestrator
 
-### Compensating Transactions
+#### Compensating Transactions
 Every saga step must have a compensating action:
 - CreateOrder ↔ CancelOrder
 - ChargePayment ↔ RefundPayment
@@ -221,14 +226,14 @@ Every saga step must have a compensating action:
 
 Compensating transactions must be **idempotent** (safe to retry multiple times)
 
-## Outbox Pattern — Reliable Event Publishing
+### Outbox Pattern — Reliable Event Publishing
 
-### Vấn đề
+#### Vấn đề
 Two operations in sequence (DB save + Kafka publish) are NOT atomic:
 - If Kafka fails after DB commit → event lost!
 - If DB fails after Kafka publish → duplicate event!
 
-### Outbox Solution
+#### Outbox Solution
 Atomic approach using a single DB transaction:
 1. Save business entity (order) to DB
 2. Save outbox event record to `outbox_events` table **in the same transaction**
@@ -245,7 +250,7 @@ Atomic approach using a single DB transaction:
 - **At-least-once delivery:** event will be published (may duplicate → consumers must be idempotent)
 - **Transactional consistency:** business data and event always in sync
 
-## Saga vs 2PC (Two-Phase Commit)
+### Saga vs 2PC (Two-Phase Commit)
 | | 2PC | Saga |
 |---|---|---|
 | Consistency | Strong (ACID across services) | Eventual |
@@ -254,7 +259,7 @@ Atomic approach using a single DB transaction:
 | Performance | Slow | Fast |
 | Use case | Small transactions, same cluster | Microservices, distributed |
 
-## CQRS (Command Query Responsibility Segregation)
+### CQRS (Command Query Responsibility Segregation)
 
 **Pattern:** Separate the write model (commands) from the read model (queries)
 - **Command side:** accepts writes, enforces business rules, emits events
@@ -265,13 +270,13 @@ Atomic approach using a single DB transaction:
 
 **Use when:** Read patterns differ greatly from write structure; need to scale reads independently; building event sourcing
 
-## Event Sourcing
+### Event Sourcing
 - Store all changes as immutable events, not current state
 - Reconstruct current state by replaying events
 - **Benefits:** Full audit trail, time-travel (reconstruct at any point), natural fit with CQRS
 - **Cost:** Complexity, event schema evolution is hard, eventual consistency
 
-## Interview Questions
+### Interview Questions
 - "Làm sao handle distributed transactions trong microservices?" → Saga pattern + Outbox
 - "Choreography vs Orchestration Saga?" → Choreography: decoupled, hard to debug; Orchestration: centralized, easier
 - "Tại sao cần Outbox Pattern?" → Atomic business data + event publish; prevent lost events

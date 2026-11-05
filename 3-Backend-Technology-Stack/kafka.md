@@ -173,9 +173,9 @@
 
 ---
 
-# 📚 Essential Resources & System Design Applications
+## 📚 Essential Resources & System Design Applications
 
-## Interview Quick Reference
+### Interview Quick Reference
 **Core concepts (must know):**
 - Topics, partitions, offsets, replication factor
 - Producer acknowledgments and idempotency
@@ -194,18 +194,7 @@
 - "Explain how Kafka handles backpressure"
 - "Design a data pipeline for processing user events"
 
-## Performance Characteristics
-**Throughput benchmarks:**
-- Single broker: 100K+ messages/sec
-- Cluster: Millions of messages/sec
-- Latency: Single-digit milliseconds (properly tuned)
-
-**Scaling considerations:**
-- Partitions determine parallelism
-- Replication factor affects durability and resource usage
-- Consumer group size should match partition count
-
-## Production Best Practices
+### Production Best Practices
 **Configuration highlights:**
 - `acks=all` for durability
 - `enable.idempotence=true` for exactly-once semantics

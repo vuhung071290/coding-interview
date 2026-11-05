@@ -157,89 +157,9 @@ Production: **allkeys-lru** hoặc **allkeys-lfu**.
 
 ---
 
-# Top Interview Topics (Senior Level)
+## 📚 Essential Resources & System Design Applications
 
----
-
-## A. Core Concepts
-- Tại sao Redis nhanh? (event loop + in-memory + async I/O + compact structures)
-- Redis vs Memcached.
-- Ảnh hưởng page fault.
-
----
-
-## B. Data Structures
-- Sorted Set dùng skiplist → O(log n).
-- HyperLogLog cho estimate unique.
-- Streams vs Pub/Sub → persistence + replay.
-
----
-
-## C. Persistence
-- RDB vs AOF trade-offs.
-- fork + COW và memory spike.
-- AOF rewrite mechanics.
-
----
-
-## D. Replication
-- Full sync / partial sync.
-- backlog buffer.
-- replication offset.
-
----
-
-## E. Sentinel
-- Failover steps.
-- Quorum & majority.
-- Split-brain scenarios.
-
----
-
-## F. Cluster
-- 16384 slots design.
-- Gossip protocol.
-- Multi-key limitations.
-
----
-
-## G. Eviction & Memory
-- LRU vs LFU.
-- Big key anti-patterns.
-
----
-
-## H. Transactions & Lua
-- WATCH → optimistic lock.
-- Lua atomic logic.
-
----
-
-## I. Distributed Lock
-- SET NX PX + unique token.
-- RedLock constraints.
-
----
-
-## J. Performance Optimization
-- Pipelining.
-- Tránh big key.
-- Hashes for memory efficiency.
-- Slowlog analysis.
-
----
-
-## K. Deployment Strategy
-- Single → dev.
-- Replication → read scaling.
-- Sentinel → HA.
-- Cluster → sharding & large scale.
-
----
-
-# 📚 Essential Resources & System Design Applications
-
-## Interview Quick Reference
+### Interview Quick Reference
 **Core concepts (must know):**
 - Data structures and their use cases
 - Memory management and eviction policies
@@ -261,14 +181,14 @@ Production: **allkeys-lru** hoặc **allkeys-lfu**.
 - "Design a real-time leaderboard system"
 - "How do you prevent cache stampede?"
 
-## Performance Benchmarks
+### Performance Benchmarks
 **Typical performance:**
 - Single instance: 100K+ operations/second
 - Memory access: <1ms response times
 - Network latency: Primary bottleneck in production
 - Cluster throughput: Scales linearly with nodes
 
-## Production Patterns
+### Production Patterns
 **Caching strategies:**
 - **Cache-aside:** Application manages cache
 - **Write-through:** Synchronous cache updates
@@ -280,7 +200,7 @@ Production: **allkeys-lru** hoặc **allkeys-lfu**.
 - **Sentinel:** Automatic failover and monitoring
 - **Redis Cluster:** Horizontal scaling and partitioning
 
-## Best Practices Summary
+### Best Practices Summary
 **Memory optimization:**
 - Use appropriate data structures for use case
 - Avoid large keys (>10MB)

@@ -9,7 +9,7 @@
 
 ---
 
-# 1. Web Server vs Application Server vs Reverse Proxy
+## 1. Web Server vs Application Server vs Reverse Proxy
 
 | Role | Làm gì | Ví dụ |
 |------|--------|-------|
@@ -22,14 +22,14 @@ Thực tế: Nginx thường đảm nhiệm cả web server + reverse proxy + lo
 
 ---
 
-# 2. Nginx — Core Concepts
+## 2. Nginx — Core Concepts
 
-## Architecture
+### Architecture
 - **Event-driven, async, non-blocking** — 1 master process + N worker processes
 - Worker dùng epoll/kqueue — handle thousands of connections per worker
 - Rất hiệu quả với static files và I/O-bound workloads
 
-## Key Config Structure
+### Key Config Structure
 ```
 nginx.conf
 ├── events block     — worker connections
@@ -41,7 +41,7 @@ nginx.conf
 │   │   └── location — URL routing rules
 ```
 
-## Essential Directives (không phải code — đây là reference)
+### Essential Directives (không phải code — đây là reference)
 - `upstream` — define backend pool: IP:port, weight, health check
 - `proxy_pass` — forward request to upstream
 - `proxy_set_header` — pass headers to backend (Host, X-Real-IP, X-Forwarded-For)
@@ -52,9 +52,9 @@ nginx.conf
 
 ---
 
-# 3. Reverse Proxy Pattern
+## 3. Reverse Proxy Pattern
 
-## Cơ bản
+### Cơ bản
 ```
 Client → Nginx (443/80) → App Server (8080)
 ```
@@ -64,7 +64,7 @@ Client → Nginx (443/80) → App Server (8080)
 - Static file serving không qua app
 - Request buffering — protect slow backends from slow clients
 
-## Important Headers
+### Important Headers
 - `X-Forwarded-For: <client-ip>` — real client IP (Nginx thêm vào)
 - `X-Real-IP: <client-ip>` — single client IP
 - `X-Forwarded-Proto: https` — original protocol (vì request đến app là HTTP)
@@ -72,24 +72,24 @@ Client → Nginx (443/80) → App Server (8080)
 
 ---
 
-# 4. Load Balancing với Nginx
+## 4. Load Balancing với Nginx
 
-## Algorithms
+### Algorithms
 - `round-robin` (default) — rotate qua servers theo thứ tự
 - `least_conn` — gửi đến server ít active connections nhất
 - `ip_hash` — same client IP → same server (sticky sessions)
 - `weighted` — `weight=3` → server nhận 3x nhiều requests
 
-## Health Checks
+### Health Checks
 - Passive: detect failures khi request fail
 - Active (Nginx Plus): periodic health check requests — commercial feature
 - Open source alternative: upstream với `max_fails` và `fail_timeout`
 
 ---
 
-# 5. SSL/TLS Termination
+## 5. SSL/TLS Termination
 
-## Nginx handles TLS
+### Nginx handles TLS
 - Certificate: Let's Encrypt (Certbot auto-renew) hoặc commercial cert
 - Protocols: TLS 1.2 + TLS 1.3; disable TLS 1.0/1.1
 - Ciphers: strong cipher suites; disable weak ones (RC4, DES, 3DES)
@@ -99,42 +99,42 @@ Client → Nginx (443/80) → App Server (8080)
 
 ---
 
-# 6. Caching với Nginx
+## 6. Caching với Nginx
 
-## Static File Caching
+### Static File Caching
 - `expires 30d` — tell browser cache for 30 days
 - `Cache-Control: public, max-age=2592000`
 - Versioned assets (`/app.v2.js`) — set long cache TTL, change URL on update
 
-## Proxy Cache (Nginx caches backend responses)
+### Proxy Cache (Nginx caches backend responses)
 - `proxy_cache_path` — define cache storage location
 - `proxy_cache_valid 200 10m` — cache 200 responses for 10 minutes
 - Use for: expensive API calls, infrequently changing data
 - Cache key: typically URL + selected headers
 
-## When NOT to cache
+### When NOT to cache
 - Authenticated requests with personalized responses
 - POST/PUT/DELETE (mutating operations)
 - Real-time data (stock prices, live scores)
 
 ---
 
-# 7. Rate Limiting với Nginx
+## 7. Rate Limiting với Nginx
 
-## Approaches
+### Approaches
 - `limit_req_zone` — define rate limit zone (e.g., 10 req/sec per IP)
 - `limit_req` — apply zone to location
 - Burst: allow short bursts, then throttle
 - Return `429 Too Many Requests` on excess
 
-## Common Use Cases
+### Common Use Cases
 - Login endpoint: 5 req/min per IP — brute force protection
 - API: 100 req/sec per API key
 - File upload: 1 req/sec per IP
 
 ---
 
-# 8. Nginx vs Apache vs Caddy
+## 8. Nginx vs Apache vs Caddy
 
 | | Nginx | Apache | Caddy |
 |---|---|---|---|
@@ -150,7 +150,7 @@ Client → Nginx (443/80) → App Server (8080)
 
 ---
 
-# 9. HAProxy — Alternative for Load Balancing
+## 9. HAProxy — Alternative for Load Balancing
 
 - Dedicated load balancer — không serve static files
 - Layer 4 (TCP) + Layer 7 (HTTP) load balancing
@@ -161,19 +161,19 @@ Client → Nginx (443/80) → App Server (8080)
 
 ---
 
-# 10. Common Production Setup
+## 10. Common Production Setup
 
-## Small Scale
+### Small Scale
 ```
 Internet → Nginx (reverse proxy + SSL) → Spring Boot app(s)
 ```
 
-## Medium Scale (K8s)
+### Medium Scale (K8s)
 ```
 Internet → Cloud LB (AWS ALB) → Nginx Ingress Controller → Services → Pods
 ```
 
-## Microservices
+### Microservices
 ```
 Internet → API Gateway (Kong/AWS API GW) → Services
                                          → Service Mesh (Istio) for internal
@@ -181,7 +181,7 @@ Internet → API Gateway (Kong/AWS API GW) → Services
 
 ---
 
-# 11. Troubleshooting Common Issues
+## 11. Troubleshooting Common Issues
 
 | Error | Likely Cause | Check |
 |-------|--------------|-------|
@@ -194,9 +194,9 @@ Internet → API Gateway (Kong/AWS API GW) → Services
 
 ---
 
-# 12. Interview Topics
+## 12. Interview Topics
 
-## Câu hỏi hay gặp
+### Câu hỏi hay gặp
 - "Reverse proxy là gì, tại sao dùng?" → SSL termination, hide backend, load balance, static serving
 - "Nginx vs Apache?" → Nginx: async event-driven, better for high concurrency; Apache: thread-based, better .htaccess support
 - "Làm sao configure HTTPS?" → SSL cert (Let's Encrypt), nginx ssl config, HTTP→HTTPS redirect, HSTS

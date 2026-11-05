@@ -151,17 +151,17 @@
 
 ---
 
-# Behavioral Interview — STAR Framework
+## Behavioral Interview — STAR Framework
 
-## STAR Structure
+### STAR Structure
 - **Situation:** Bối cảnh, khi nào xảy ra
 - **Task:** Nhiệm vụ của bạn, trách nhiệm cụ thể
 - **Action:** Những gì BẠN đã làm (không phải team, dùng "I")
 - **Result:** Kết quả đo lường được, impact thực tế
 
-## Essential STAR Stories (chuẩn bị ít nhất 1 cho mỗi chủ đề)
+### Essential STAR Stories (chuẩn bị ít nhất 1 cho mỗi chủ đề)
 
-### Technical Challenge
+#### Technical Challenge
 **S:** Payment service có latency spike đột ngột lên P99 = 8s trong production
 **T:** Tôi phụ trách investigate và fix trong 24h (SLA với merchant)
 **A:**
@@ -172,7 +172,7 @@
 
 **R:** P99 latency giảm từ 8s → 180ms, 0 customer complaints, giải pháp applied cho 3 similar endpoints khác
 
-### Conflict / Disagreement
+#### Conflict / Disagreement
 **S:** Code review: tôi và senior dev bất đồng về caching strategy
 **T:** Tôi propose Redis caching, họ argue không cần thiết
 **A:**
@@ -182,7 +182,7 @@
 
 **R:** Team đồng ý A/B test → cache giảm DB load 60% → adopted cho toàn bộ service
 
-### Leadership / Mentoring
+#### Leadership / Mentoring
 **S:** Junior developer gặp khó khăn với Kafka consumer implementation
 **T:** Tôi phụ trách onboarding và technical growth cho team member mới
 **A:**
@@ -192,7 +192,7 @@
 
 **R:** Junior dev tự implement full Kafka consumer sau 6 tuần. Wiki được team dùng như reference, giảm onboarding time 30%
 
-### Failure / What You Learned
+#### Failure / What You Learned
 **S:** Tôi deploy feature không test kỹ → gây outage 15 phút
 **T:** Feature owner + on-call engineer
 **A:**
@@ -203,9 +203,9 @@
 
 **R:** Zero similar incidents trong 12 tháng tiếp theo. Lesson: speed không đáng đánh đổi với reliability cho critical paths
 
-## Common Behavioral Questions
+### Common Behavioral Questions
 
-### "Tell me about yourself"
+#### "Tell me about yourself"
 Structure:
 1. Current role + main responsibility (2 sentences)
 2. Key achievement / impact (1–2 sentences)
@@ -213,7 +213,7 @@ Structure:
 
 Example: "I'm a Senior Backend Engineer at [Company], leading the payments team where I'm responsible for processing X million transactions/month. Recently I led the migration from monolith to microservices, reducing deployment time from 2 hours to 15 minutes. I'm excited about this role because [specific reason about company/tech]."
 
-### "Why do you want to leave?"
+#### "Why do you want to leave?"
 Focus on positive (pull factors, không negative về công ty cũ):
 - "Looking for more ownership / technical challenges"
 - "Excited about [company]'s scale and technical problems"
@@ -221,7 +221,7 @@ Focus on positive (pull factors, không negative về công ty cũ):
 
 Avoid: "My boss is bad", "Company is not stable"
 
-### "Where do you see yourself in 5 years?"
+#### "Where do you see yourself in 5 years?"
 Align with the role:
 - Technical track: "Staff/Principal Engineer, deeper system design expertise"
 - Management track: "Engineering Manager, build and grow high-performance teams"
@@ -229,7 +229,7 @@ Align with the role:
 
 ---
 
-# Vietnam/SEA Market Interview Specifics
+## Vietnam/SEA Market Interview Specifics
 
 ### Common Tech Stack Questions for Vietnam Market
 - Kafka consumer groups, offset management
@@ -238,19 +238,19 @@ Align with the role:
 - Database partitioning / sharding cho Vietnamese scale
 - Payment integration (VNPay, MoMo, Zalopay)
 
-## Interview Formats in Vietnam
+### Interview Formats in Vietnam
 
-### Technical Screen (45-60 phút)
+#### Technical Screen (45-60 phút)
 - LeetCode Medium (data structures, algorithms)
 - System design basics
 - Java/Spring knowledge questions
 
-### Technical Interview (90-120 phút)
+#### Technical Interview (90-120 phút)
 - LeetCode Medium-Hard hoặc live coding
 - System design (design a payment system, ride-matching, URL shortener)
 - Deep-dive past experience
 
-### Culture/Fit Interview
+#### Culture/Fit Interview
 - Behavioral questions
 - Team dynamics, working style
 - Vietnamese companies thường focus: ownership, learning mindset, stability
